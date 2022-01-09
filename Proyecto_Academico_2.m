@@ -242,28 +242,28 @@ xlabel(ax2,'Tiempo (s)')
 
 % Velocidad angular--------------------------------------------------------
 
-omega_1 = diff(angulo_e1)/dt;
-omega_2 = diff(angulo_e2)/dt + omega_1;
+omega_1 = [0 diff(angulo_e1)/dt];
+omega_2 = [0 diff(angulo_e2)/dt] + omega_1;
 
 figure;
 tiledlayout(2,1)
 
 ax1 = nexttile;
-plot(ax1,tiempo(1:end-1),omega_1);
+plot(ax1,tiempo(1:end),omega_1);
 title(ax1,'Omega_1')
 ylabel(ax1,'Velocidad angular (rad/s)')
 xlabel(ax1,'Tiempo (s)')
 
 ax2 = nexttile;
-plot(ax2,tiempo(1:end-1),omega_2);
+plot(ax2,tiempo(1:end),omega_2);
 title(ax2,'Omega_2')
 ylabel(ax2,'Velocidad angular (rad/s)')
 xlabel(ax2,'Tiempo (s)')
 
 % Velocidad lineal---------------------------------------------------------
 
-angulo_1_v = angulo_e1(2:end);
-angulo_2_v = angulo_e2(2:end) + angulo_1_v;
+angulo_1_v = angulo_e1(1:end);
+angulo_2_v = angulo_e2(1:end) + angulo_1_v;
 
 vxA = L1*omega_1.*sin(angulo_1_v);
 vyA = L1*omega_1.*cos(angulo_1_v);
@@ -298,29 +298,29 @@ legend(ax2,"vy","vyB");
 % Aceleración angular------------------------------------------------------
 
 
-alpha_1 = [0 diff(omega_1)/dt];
-alpha_2 = [0 diff(omega_2)/dt] + alpha_1;
+alpha_1 = [diff(omega_1)/dt 0];
+alpha_2 = [diff(omega_2)/dt 0] + alpha_1;
 
 
 figure;
 tiledlayout(2,1)
 
 ax1 = nexttile;
-plot(ax1,tiempo(2:end),alpha_1);
+plot(ax1,tiempo(1:end),alpha_1);
 title(ax1,'Alpha_1')
 ylabel(ax1,'Aceleración angular (rad/s^2)')
 xlabel(ax1,'Tiempo (s)')
 
 ax2 = nexttile;
-plot(ax2,tiempo(2:end),alpha_2);
+plot(ax2,tiempo(1:end),alpha_2);
 title(ax2,'Alpha_2')
 ylabel(ax2,'Aceleración angular (rad/s^2)')
 xlabel(ax2,'Tiempo (s)')
 
 % Aceleración lineal ------------------------------------------------------
 
-angulo_1_a = angulo_e1(2:end);
-angulo_2_a = angulo_e2(2:end) + angulo_1_a;
+angulo_1_a = angulo_e1(1:end);
+angulo_2_a = angulo_e2(1:end) + angulo_1_a;
 
 axA = L1*alpha_1.*sin(angulo_1_a) - L1*omega_1.^2.*cos(angulo_1_a);
 ayA = L1*alpha_1.*cos(angulo_1_a) - L1*omega_1.^2.*sin(angulo_1_a);
@@ -376,7 +376,7 @@ g = 9.81; % cm/s^2
 %     F21x;
 %     F21y;
 %     T12];
-
+figure;
 for iii = 1:size(angulo_e1,2)
     
     R01x = -L1/2*cos(angulo_e1(iii)) / 100; % m
@@ -397,27 +397,39 @@ for iii = 1:size(angulo_e1,2)
         0       0       0       R12y    R12x    1];
 
 
-    B = [m1*axG1;
-        m1 * ayG1 + m1 * g;
-        IG1 * alpha_1;
-        m2 * axG2;
-        m2 * ayG2 + m2 * g;
-        IG2 * alpha_2];
+    B = [m1*axG1(iii);
+        m1 * ayG1(iii) + m1 * g;
+        IG1 * alpha_1(iii);
+        m2 * axG2(iii);
+        m2 * ayG2(iii) + m2 * g;
+        IG2 * alpha_2(iii)];
     
-    plot([0 -R01x], [0 -R01y], 'ro-');hold on;
-    plot([-R01x  -R01x+R21x], [-R01y  -R01y+R21y], 'bo-');hold on;
-    plot([-R01x+R21x -R01x+R21x+(-R12x)], [-R01y+R21y -R01y+R21y+(-R12y)], 'bo-');hold off;
+%     plot([0 -R01x], [0 -R01y], 'ro-');hold on;
+%     plot([-R01x  -R01x+R21x], [-R01y  -R01y+R21y], 'bo-');hold on;
+%     plot([-R01x+R21x -R01x+R21x+(-R12x)], [-R01y+R21y -R01y+R21y+(-R12y)], 'bo-');hold off;
     
-    axis([-10 max(x)+15 -25 -25+(max(x)+10)+15]);
+%     axis([-10 max(x)+15 -25 -25+(max(x)+10)+15]);
     
-    pause(0.0001)
+%     pause(0.0001)
+    
+    X = A\B;
+    
+    F01x(iii) = X(1);
+    F01y(iii) = X(2);
+    T01(iii) = X(3);
+    F21x(iii) = X(4);
+    F21y(iii) = X(5);
+    T12(iii) = X(6);
+    
+    plot(tiempo(1:iii),T01(1:iii),'r-'); hold on;
+    
     
 end
 
 
 
-figure;
-plot(X(3,:));
+% figure;
+% plot(X(3,:));
 
 function[theta1, theta2] = inversa(Px,Py,L1,L2)
     r1 = sqrt(Px^2 + Py^2);

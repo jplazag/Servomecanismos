@@ -421,7 +421,7 @@ for iii = 1:size(angulo_e1,2)
     F21y(iii) = X(5);
     T12(iii) = X(6);
     
-    plot(tiempo(1:iii),T01(1:iii),'r-'); hold on;
+    plot(tiempo(1:iii),F21x(1:iii),'r-'); hold on;
     
     
 end
@@ -430,6 +430,30 @@ end
 
 % figure;
 % plot(X(3,:));
+%% Codigo para seleccion de rodamientos
+
+%Con rodamiento SKF 618/7   % Rodamiento de dimetro interno 7mm
+%C0=0.26*1000; %N
+%C= 0.78*1000; %N
+
+%Con rodamiento SKF 617/7   % Rodamiento de dimetro interno 7mm
+C0=0.04*1000; %N
+C= 0.26*1000; %N
+
+P01 = sqrt(F01x.^2+F01y.^2);
+P21 = sqrt(F21x.^2+F21y.^2);
+
+P01f=rms(P01)*1.3*5; %1.3 de correa dentada, 5 como factor de seguridad propio
+P21f = rms(P21)*1.3*5;
+
+
+s01=C0/P01f;
+s21=C0/P21f;
+
+L01= (C/P01f)^3; %millones de revoluciones
+L21= (C/P21f)^3; %millones de revoluciones
+
+
 
 function[theta1, theta2] = inversa(Px,Py,L1,L2)
     r1 = sqrt(Px^2 + Py^2);
@@ -440,3 +464,5 @@ function[theta1, theta2] = inversa(Px,Py,L1,L2)
     theta1 = B1 - acos(M2);
     theta2 = acos(M);
 end
+
+

@@ -19,77 +19,77 @@ smiData.RigidTransform(11).ID = '';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(1).translation = [0 0 0.78740157480314954];  % in
+smiData.RigidTransform(1).translation = [0 0 20];  % mm
 smiData.RigidTransform(1).angle = 0;  % rad
 smiData.RigidTransform(1).axis = [0 0 0];
 smiData.RigidTransform(1).ID = 'B[pin2:1:-:Eslabon:1]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(2).translation = [-4.2322834645669287 0 0.39370078740157477];  % in
-smiData.RigidTransform(2).angle = 1.5707963267948968;  % rad
+smiData.RigidTransform(2).translation = [-107.5 0 10];  % mm
+smiData.RigidTransform(2).angle = 1.570796326794897;  % rad
 smiData.RigidTransform(2).axis = [0 0 1];
 smiData.RigidTransform(2).ID = 'F[pin2:1:-:Eslabon:1]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(3).translation = [4.2322834645669287 0 0.39370078740157477];  % in
+smiData.RigidTransform(3).translation = [107.5 0 10];  % mm
 smiData.RigidTransform(3).angle = 3.1415926535897931;  % rad
-smiData.RigidTransform(3).axis = [0.70710678118654746 0.70710678118654757 0];
+smiData.RigidTransform(3).axis = [0.70710678118654735 0.70710678118654768 0];
 smiData.RigidTransform(3).ID = 'B[Eslabon:1:-:pin2:2]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(4).translation = [0 0 0.78740157480314954];  % in
+smiData.RigidTransform(4).translation = [0 0 20];  % mm
 smiData.RigidTransform(4).angle = 3.1415926535897931;  % rad
 smiData.RigidTransform(4).axis = [0 1 0];
 smiData.RigidTransform(4).ID = 'F[Eslabon:1:-:pin2:2]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(5).translation = [0 0 -0.39370078740157477];  % in
+smiData.RigidTransform(5).translation = [0 0 -10];  % mm
 smiData.RigidTransform(5).angle = 3.1415926535897931;  % rad
 smiData.RigidTransform(5).axis = [0 0 1];
 smiData.RigidTransform(5).ID = 'B[pin2:2:-:Eslabon:2]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(6).translation = [-4.2322834645669287 0 -0.39370078740157477];  % in
+smiData.RigidTransform(6).translation = [-107.5 0 -10];  % mm
 smiData.RigidTransform(6).angle = 1.5707963267948968;  % rad
 smiData.RigidTransform(6).axis = [-0 -0 -1];
 smiData.RigidTransform(6).ID = 'F[pin2:2:-:Eslabon:2]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(7).translation = [4.2322834645669287 0 0.39370078740157477];  % in
+smiData.RigidTransform(7).translation = [107.5 0 10];  % mm
 smiData.RigidTransform(7).angle = 3.1415926535897931;  % rad
-smiData.RigidTransform(7).axis = [0.70710678118654746 0.70710678118654757 0];
+smiData.RigidTransform(7).axis = [0.70710678118654757 0.70710678118654746 0];
 smiData.RigidTransform(7).ID = 'B[Eslabon:2:-:pin2:3]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(8).translation = [0 0 0.78740157480314954];  % in
+smiData.RigidTransform(8).translation = [0 0 20];  % mm
 smiData.RigidTransform(8).angle = 3.1415926535897931;  % rad
 smiData.RigidTransform(8).axis = [0 1 0];
 smiData.RigidTransform(8).ID = 'F[Eslabon:2:-:pin2:3]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(9).translation = [0 0 0];  % in
+smiData.RigidTransform(9).translation = [0 0 0];  % mm
 smiData.RigidTransform(9).angle = 3.1415926535897931;  % rad
 smiData.RigidTransform(9).axis = [1 0 0];
 smiData.RigidTransform(9).ID = 'B[Soporte:1:-:pin2:1]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(10).translation = [0 0 0];  % in
+smiData.RigidTransform(10).translation = [0 0 0];  % mm
 smiData.RigidTransform(10).angle = 3.1415926535897931;  % rad
 smiData.RigidTransform(10).axis = [1 0 0];
 smiData.RigidTransform(10).ID = 'F[Soporte:1:-:pin2:1]';
 
 %Translation Method - Cartesian
 %Rotation Method - Arbitrary Axis
-smiData.RigidTransform(11).translation = [-0.32270555863522615 0.0081214257670008845 -0.17716535433070857];  % in
+smiData.RigidTransform(11).translation = [-8.1967211893347454 0.20628421448182249 -4.4999999999999982];  % mm
 smiData.RigidTransform(11).angle = 0;  % rad
 smiData.RigidTransform(11).axis = [0 0 0];
 smiData.RigidTransform(11).ID = 'RootGround[Soporte:1]';
@@ -148,12 +148,12 @@ smiData.Solid(3).ID = 'Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}';
 smiData.RevoluteJoint(3).Rz.Pos = 0.0;
 smiData.RevoluteJoint(3).ID = '';
 
-smiData.RevoluteJoint(1).Rz.Pos = 111.95825657441719;  % deg
+smiData.RevoluteJoint(1).Rz.Pos = 9.086900000000373;  % deg
 smiData.RevoluteJoint(1).ID = '[pin2:1:-:Eslabon:1]';
 
-smiData.RevoluteJoint(2).Rz.Pos = -46.07001445760941;  % deg
+smiData.RevoluteJoint(2).Rz.Pos = -18.169999999999931;  % deg
 smiData.RevoluteJoint(2).ID = '[pin2:2:-:Eslabon:2]';
 
-smiData.RevoluteJoint(3).Rz.Pos = -179.99999999999997;  % deg
+smiData.RevoluteJoint(3).Rz.Pos = 105.02865788319259;  % deg
 smiData.RevoluteJoint(3).ID = '[Eslabon:2:-:pin2:3]';
 

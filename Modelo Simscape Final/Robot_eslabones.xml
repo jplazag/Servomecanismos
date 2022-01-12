@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="Yeison" on="01/12/22||13:12:18" using="Simscape Multibody Link Version 7.4" from="Autodesk Inventor 2021 (Build 250183000. 183)"/>
+<ModelUnits mass="lbmass" length="inch"/>
+<DataUnits mass="kilogram" length="centimeter"/>
+<RootAssembly name="Assembly2" uid="Assembly2_{968EE70B-4FE6-B071-0117-C7A6A33AF908}" version="{E78B4951-D199-7B36-7C9F-E979CF0212EC}">
+<AssemblyFile name="Robot_eslabones.iam" type="Inventor Assembly"/>
+<InstanceTree>
+<Instance name="Soporte:1" grounded="true" uid="Soporte:1" entityUid="Soporte.ipt_{A0606533-4230-6711-DFA6-8AAFFD99665E}">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.81967211893347447 0.020628421448182249 -0.44999999999999979</Translation>
+</Transform>
+</Instance>
+<Instance name="pin2:1" uid="pin2:1" entityUid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-0.81967211893347447 0.020628421448182249 -0.44999999999999979</Translation>
+</Transform>
+</Instance>
+<Instance name="Eslabon:1" uid="Eslabon:1" entityUid="Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}">
+<Transform>
+<Rotation>0.9274565319292517 -0.37393098478436787 0 0.37393098478436843 0.92745653192925082 0 0 0 1.0000000000000449</Rotation>
+<Translation>9.1504855993059842 4.0403865078801386 0.54999999999995552</Translation>
+</Transform>
+</Instance>
+<Instance name="pin2:2" uid="pin2:2" entityUid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}">
+<Transform>
+<Rotation>-0.37393098478437181 -0.92745653192926092 0 0.92745653192926047 -0.37393098478437214 0 0 0 1.0000000000000449</Rotation>
+<Translation>19.120643317545444 8.0601445943121011 -0.45000000000008977</Translation>
+</Transform>
+</Instance>
+<Instance name="Eslabon:2" uid="Eslabon:2" entityUid="Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}">
+<Transform>
+<Rotation>0.91275036297754819 0.40851777792937533 0 -0.40851777792937533 0.91275036297754819 0 0 0 1.0000000000000004</Rotation>
+<Translation>28.932709719554087 3.6685784815713154 -0.45000000000004453</Translation>
+</Transform>
+</Instance>
+<Instance name="pin2:3" uid="pin2:3" entityUid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}">
+<Transform>
+<Rotation>0.40851777792937533 -0.91275036297754819 0 0.91275036297754819 0.40851777792937533 0 0 0 1.0000000000000004</Rotation>
+<Translation>38.74477612156273 -0.7229876311694694 -1.4500000000000441</Translation>
+</Transform>
+</Instance>
+</InstanceTree>
+<Constraints>
+</Constraints>
+<Joints>
+<Weld name="Rigid:1">
+<BaseFrame>
+<InstancePath>
+<Uid>Soporte:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>1 0 0 0 -1 0 0 0 -1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>pin2:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>1 0 0 0 -1 0 0 0 -1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</FollowerFrame>
+</Weld>
+<Revolute name="Rotational:1">
+<BaseFrame>
+<InstancePath>
+<Uid>pin2:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 2</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>Eslabon:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>-1.6653345369377683e-16 -1 0 1 -1.6653345369377683e-16 0 0 0 1</Rotation>
+<Translation>-10.75 0 1</Translation>
+</Transform>
+</FollowerFrame>
+</Revolute>
+<Weld name="Rigid:2">
+<BaseFrame>
+<InstancePath>
+<Uid>Eslabon:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>-1.6653345369377683e-16 1 0 1 1.6653345369377683e-16 0 0 0 -1</Rotation>
+<Translation>10.75 0 1</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>pin2:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 0 0 0 0 0 0 0 -1</Rotation>
+<Translation>0 0 2</Translation>
+</Transform>
+</FollowerFrame>
+</Weld>
+<Revolute name="Rotational:2">
+<BaseFrame>
+<InstancePath>
+<Uid>pin2:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 0 0 0 0 0 0 0 1</Rotation>
+<Translation>0 0 -1</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>Eslabon:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>-10.75 0 1</Translation>
+</Transform>
+</FollowerFrame>
+</Revolute>
+<Revolute name="Rotational:3">
+<BaseFrame>
+<InstancePath>
+<Uid>Eslabon:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 1 0 1 0 0 0 0 -1</Rotation>
+<Translation>10.75 0 1</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>pin2:3</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 0 0 0 0 0 0 0 -1</Rotation>
+<Translation>0 0 2</Translation>
+</Transform>
+</FollowerFrame>
+</Revolute>
+</Joints>
+</RootAssembly>
+<Assemblies>
+</Assemblies>
+<Parts>
+<Part name="Eslabon.ipt" uid="Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}" version="{3F126BAF-AD85-688C-C846-3B58D9A9554A}">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Eslabon.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.096665707058937247</Mass>
+<CenterOfMass>1.1337434432338879e-12 0 0.5</CenterOfMass>
+<Inertia>0.13514477521573634 4.7951588805103746 4.9141927045496221 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Eslabon_ipt_288d88c6.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+<Part name="pin2.ipt" uid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}" version="{7E306A50-6726-CFCE-B7BE-93CBBE3E56D3}">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="pin2.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0019006635554217435</Mass>
+<CenterOfMass>1.150247454520353e-10 0 1.0000000000000002</CenterOfMass>
+<Inertia>0.0007772922091343553 0.00077729217200766686 0.00028747534419419472 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="pin2_ipt_3660e19a.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Soporte.ipt" uid="Soporte.ipt_{A0606533-4230-6711-DFA6-8AAFFD99665E}" version="{44B74FFA-0C52-A358-0443-27CC526C2230}">
+<ModelUnits mass="kilogram" length="millimeter"/>
+<PartFile name="Soporte.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.019965863208486347</Mass>
+<CenterOfMass>3.2847612860926356e-12 -0.14997055901865339 0.44762010846266087</CenterOfMass>
+<Inertia>0.033030688296796576 0.036067328873348868 0.06504328430509157 7.1260893978304377e-06 2.5759561673791608e-15 -9.8639550553668506e-15</Inertia>
+</MassProperties>
+<GeometryFile name="Soporte_ipt_4102156f.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

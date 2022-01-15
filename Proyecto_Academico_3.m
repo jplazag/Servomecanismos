@@ -1,21 +1,10 @@
 close all
-
-% syms t
-% a = scale*(r0-ra*sin(n*(t+theta0))).* sin(t)+ x0;
-% b = scale*(r0-ra*sin(n*(t+theta0))).* cos(t)+ y0;
-% 
-% t = [pi/2 7*pi/6 11*pi/6];
-% picos_a = subs(a);
-% picos_b = subs(b);
-% 
-% da = vpa(subs(a,t,2));
-% db = vpa(subs(b,t,2));
+clear
 
 
 
-dt = 0.01;
-tf = 5; %Maximo 35 segundos y minimo 3 segundos
-nt = tf/dt;
+dt = 0.05;
+
 
 r0 = 10;
 ra = r0*3/10;
@@ -25,7 +14,7 @@ y0 = 15;
 theta0_f = 45*pi/180;
 theta_f = flip(0:dt:2*pi); %linspace(0,2*pi,nt);
 r = r0-ra*sin(n*(theta_f + theta0_f));
-scale = 1;
+scale = 1.3;
 
 % R = sqrt(x.^2+y.^2);
 % disp(max(R));
@@ -35,80 +24,29 @@ L1 =21.5; %1.0*ceil(max(R))/2;    cm
 L2 =21.5; %1.0*ceil(max(R))/2;    cm
 
 
-t = [pi/2 7*pi/6 11*pi/6];
-
-picos_a = scale*(r0-ra*sin(n*(t + theta0_f))).* sin(t) + x0;
-picos_b = scale*(r0-ra*sin(n*(t + theta0_f))).* cos(t) + y0;
-
-vectores_a_picos = sqrt(picos_a.^2 + picos_b.^2);
-
-punto_i = dot(t, floor(vectores_a_picos/max(vectores_a_picos)));
-
-theta_f = flip(0:dt:2*pi) + punto_i - theta0_f;
-
-
-
-% Trayectoria de interés --------------------------------------------------
-
-x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
-y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
-
-
-
- 
-% Variables de interés ----------------------------------------------------
-vx = diff(x)/dt;
-vxm = mean(abs(vx));
-
-vy = diff(y)/dt;
-vym = mean(abs(vy));
-vt = sqrt(vx.^2+vy.^2);
-
-vt_media = mean(vt);
-vt_maxima = max(vt);
-
-p = punto_i - theta0_f;
-
-% Punto de inicio ---------------------------------------------------------
-x_p = scale * 0.8 * (r0 - ra * sin(n*(p + theta0_f)))* sin(p) + x0;
-y_p = scale * 0.8 * (r0 - ra * sin(n*(p + theta0_f)))* cos(p) + y0;
-
-% Pendiente de conexión ---------------------------------------------------
-syms time
-
-a = scale * 0.8 * (r0 - ra * sin(n*(time + theta0_f)))* sin(time) + x0;
-b = scale * 0.8 * (r0 - ra * sin(n*(time + theta0_f)))* cos(time) + y0;
-
-
-
-
-
-% Trayectoria recta -------------------------------------------------------
+% Selección de la pendiente de la trayectoria recta de aproximación -------
 
 x_inicio = min(1.3*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0) - 5;
 
-
-
-theta_pre_dev = (2*pi:-0.001:0) + punto_i - theta0_f;
-
+theta_pre_dev = (2*pi:-dt:0) - theta0_f;
 
 x_pre_dev = scale*0.8*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* sin(theta_pre_dev)+ x0 ;
 y_pre_dev = scale*0.8*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* cos(theta_pre_dev)+ y0 ;
 
-
 derivadas_trebol = diff( [y_pre_dev y_pre_dev(1)] )./diff([x_pre_dev x_pre_dev(1)]);
 
-% devs_dist = zeros(1,size(x_pre_dev, 2)); 
-
-
-    
 devs_dist = abs( derivadas_trebol  - (y_pre_dev - 0)./(x_pre_dev - x_inicio) ) .* (sqrt((y_pre_dev - 0).^2 + (x_pre_dev - x_inicio).^2));
-%     devs_dist(iter) = abs(double(vpa(subs(diff(b),time,y_pre_dev(iter)))/vpa(subs(diff(a),time,x_pre_dev(iter))))-(y_pre_dev(iter) - 0)/(x_pre_dev(iter) - x_inicio));
 
 indice_r = find(devs_dist == min(devs_dist));
 
 x_final_r = x_pre_dev(indice_r);
 y_final_r = y_pre_dev(indice_r);
+
+
+pendiente_r = (y_final_r - 0) / (x_final_r - x_inicio);
+
+
+% Selección de velocidad de empalme y la aceleración necesaria ------------
 
 v_r_x = diff(x_pre_dev)./abs(diff(theta_pre_dev));
 
@@ -116,16 +54,9 @@ v_r_x_f = v_r_x(indice_r);
 
 a_r = v_r_x_f^2 / (2 * (x_final_r - x_inicio) );
 
-theta_f = (2*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
 
-x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
-y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
+% Construcción de la trayectoria recta de aproximación --------------------
 
-figure
-plot([x_inicio x_final_r],[0 y_final_r], 'r'); hold on;
-plot(x,y);
-
-pendiente_r = (y_final_r - 0) / (x_final_r - x_inicio);
 
 t_r = 0:dt: sqrt(2*(x_final_r - x_inicio)/a_r);
 
@@ -136,31 +67,57 @@ end
 x_r = a_r*t_r.^2/2 + x_inicio;
 y_r = pendiente_r * (x_r - x_inicio);
 
+
+% Trayectoria de interés --------------------------------------------------
+
+theta_f = (2*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
+
+x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
+y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
+
+% figure
+% plot([x_inicio x_final_r],[0 y_final_r], 'r'); hold on;
+% plot(x,y);
+
 % Preparación de variables para almacenar los datos a graficar ------------
 
- tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt];
-
-v_p = [0.01 0.001 0.0001];
-
-%% Pruebas varias ------------------------
+tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt];
 
 
+
+%% Pruebas de velocidad lineal 
 
 rutas_x = [x_r x];
 rutas_y = [y_r y];
 
-velocidad_x = diff(rutas_x)./diff(tiempo);
-velocidad_y = diff(rutas_y)./diff(tiempo);
+while true
+
+velocidad_x = gradient(rutas_x)./gradient(tiempo);
+velocidad_y = gradient(rutas_y)./gradient(tiempo);
 
 velocidad = sqrt(velocidad_x.^2 + velocidad_y.^2);
 
+velocidad_m = mean(velocidad( size(x_r,2):end ));
+
+if velocidad_m <= 10
+   break 
+end
+
+tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt]*velocidad_m/10;
+
+end
+
+disp(velocidad_m)
+
 figure
-plot(tiempo(1:end - 1), velocidad);
+plot(tiempo, velocidad);
 
 %% Simulación y cálculo de ángulos
 
 % v = VideoWriter('Movimiento2.avi');
 % open(v);
+
+
 
 figure('Name','Movimiento','NumberTitle','off');
 
@@ -224,7 +181,7 @@ for ii = 1:2
 %         end
         
 
-        pause(v_p(ii))
+        pause(0.001)
         
         %         if i==nt
         %             plot([x(in)],[y(in)],'x','MarkerSize',10,'MarkerEdgeColor','k');hold on

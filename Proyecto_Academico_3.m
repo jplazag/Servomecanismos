@@ -1,21 +1,10 @@
 close all
-
-% syms t
-% a = scale*(r0-ra*sin(n*(t+theta0))).* sin(t)+ x0;
-% b = scale*(r0-ra*sin(n*(t+theta0))).* cos(t)+ y0;
-% 
-% t = [pi/2 7*pi/6 11*pi/6];
-% picos_a = subs(a);
-% picos_b = subs(b);
-% 
-% da = vpa(subs(a,t,2));
-% db = vpa(subs(b,t,2));
+clear
 
 
 
-dt = 0.1;
-tf = 5; %Maximo 35 segundos y minimo 3 segundos
-nt = tf/dt;
+dt = 0.05;
+
 
 r0 = 10;
 ra = r0*3/10;
@@ -25,7 +14,7 @@ y0 = 15;
 theta0_f = 45*pi/180;
 theta_f = flip(0:dt:2*pi); %linspace(0,2*pi,nt);
 r = r0-ra*sin(n*(theta_f + theta0_f));
-scale = 1;
+scale = 1.3;
 
 % R = sqrt(x.^2+y.^2);
 % disp(max(R));
@@ -35,110 +24,100 @@ L1 =21.5; %1.0*ceil(max(R))/2;    cm
 L2 =21.5; %1.0*ceil(max(R))/2;    cm
 
 
-t = [pi/2 7*pi/6 11*pi/6];
-
-picos_a = scale*(r0-ra*sin(n*(t + theta0_f))).* sin(t) + x0;
-picos_b = scale*(r0-ra*sin(n*(t + theta0_f))).* cos(t) + y0;
-
-vectores_a_picos = sqrt(picos_a.^2 + picos_b.^2);
-
-punto_i = dot(t, floor(vectores_a_picos/max(vectores_a_picos)));
-
-theta_f = flip(0:dt:2*pi) + punto_i - theta0_f;
-
-
-
-% Trayectoria de interés --------------------------------------------------
-
-x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
-y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
-
-
-
- 
-% Variables de interés ----------------------------------------------------
-vx = diff(x)/dt;
-vxm = mean(abs(vx));
-
-vy = diff(y)/dt;
-vym = mean(abs(vy));
-vt = sqrt(vx.^2+vy.^2);
-
-vt_media = mean(vt);
-vt_maxima = max(vt);
-
-p = punto_i - theta0_f;
-
-% Punto de inicio ---------------------------------------------------------
-x_p = scale * 0.8 * (r0 - ra * sin(n*(p + theta0_f)))* sin(p) + x0;
-y_p = scale * 0.8 * (r0 - ra * sin(n*(p + theta0_f)))* cos(p) + y0;
-
-% Pendiente de conexión ---------------------------------------------------
-syms time
-
-a = scale * 0.8 * (r0 - ra * sin(n*(time + theta0_f)))* sin(time) + x0;
-b = scale * 0.8 * (r0 - ra * sin(n*(time + theta0_f)))* cos(time) + y0;
-
-
-
-
-
-% Trayectoria recta -------------------------------------------------------
+% Selección de la pendiente de la trayectoria recta de aproximación -------
 
 x_inicio = min(1.3*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0) - 5;
 
-
-
-theta_pre_dev = (2*pi:-0.001:0) + punto_i - theta0_f;
-
+theta_pre_dev = (2*pi:-dt:0) - theta0_f;
 
 x_pre_dev = scale*0.8*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* sin(theta_pre_dev)+ x0 ;
 y_pre_dev = scale*0.8*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* cos(theta_pre_dev)+ y0 ;
 
-
 derivadas_trebol = diff( [y_pre_dev y_pre_dev(1)] )./diff([x_pre_dev x_pre_dev(1)]);
 
-% devs_dist = zeros(1,size(x_pre_dev, 2)); 
-
-
-    
 devs_dist = abs( derivadas_trebol  - (y_pre_dev - 0)./(x_pre_dev - x_inicio) ) .* (sqrt((y_pre_dev - 0).^2 + (x_pre_dev - x_inicio).^2));
-%     devs_dist(iter) = abs(double(vpa(subs(diff(b),time,y_pre_dev(iter)))/vpa(subs(diff(a),time,x_pre_dev(iter))))-(y_pre_dev(iter) - 0)/(x_pre_dev(iter) - x_inicio));
 
-x_final_r = x_pre_dev(find(devs_dist == min(devs_dist)));
-y_final_r = y_pre_dev(find(devs_dist == min(devs_dist)));
+indice_r = find(devs_dist == min(devs_dist));
+
+x_final_r = x_pre_dev(indice_r);
+y_final_r = y_pre_dev(indice_r);
 
 
+pendiente_r = (y_final_r - 0) / (x_final_r - x_inicio);
 
-theta_f = (2*pi:-dt:0) + theta_pre_dev(find(devs_dist == min(devs_dist))) ;
+
+% Selección de velocidad de empalme y la aceleración necesaria ------------
+
+v_r_x = diff(x_pre_dev)./abs(diff(theta_pre_dev));
+
+v_r_x_f = v_r_x(indice_r);
+
+a_r = v_r_x_f^2 / (2 * (x_final_r - x_inicio) );
+
+
+% Construcción de la trayectoria recta de aproximación --------------------
+
+
+t_r = 0:dt: sqrt(2*(x_final_r - x_inicio)/a_r);
+
+if t_r(end) ~= sqrt(2*(x_final_r - x_inicio)/a_r)
+    t_r = [t_r sqrt(2*(x_final_r - x_inicio)/a_r)];
+end
+
+x_r = a_r*t_r.^2/2 + x_inicio;
+y_r = pendiente_r * (x_r - x_inicio);
+
+
+% Trayectoria de interés --------------------------------------------------
+
+theta_f = (2*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
 
 x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
 y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
 
-figure
-plot([x_inicio x_final_r],[0 y_final_r], 'r'); hold on;
-plot(x,y);
-
-pendiente_r = (y_final_r - 0) / (x_final_r - x_inicio);
-
-t_r = sqrt(x_inicio):sqrt(dt):sqrt(x_final_r);
-
-x_r = t_r.^2;
-y_r = pendiente_r * (t_r - x_inicio);
-
-
-
+% figure
+% plot([x_inicio x_final_r],[0 y_final_r], 'r'); hold on;
+% plot(x,y);
 
 % Preparación de variables para almacenar los datos a graficar ------------
 
- tiempo = [x_r x_r(end)+dt:dt:(size(theta_f,2) + x_r(end)+dt)*dt];
+tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt];
 
-v_p = [0.01 0.001 0.0001];
+
+
+%% Pruebas de velocidad lineal 
+
+rutas_x = [x_r x];
+rutas_y = [y_r y];
+
+while true
+
+velocidad_x = gradient(rutas_x)./gradient(tiempo);
+velocidad_y = gradient(rutas_y)./gradient(tiempo);
+
+velocidad = sqrt(velocidad_x.^2 + velocidad_y.^2);
+
+velocidad_m = mean(velocidad( size(x_r,2):end ));
+
+if velocidad_m <= 10
+   break 
+end
+
+tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt]*velocidad_m/10;
+
+end
+
+disp(velocidad_m)
+
+figure
+plot(tiempo, velocidad);
 
 %% Simulación y cálculo de ángulos
 
 % v = VideoWriter('Movimiento2.avi');
 % open(v);
+
+
 
 figure('Name','Movimiento','NumberTitle','off');
 
@@ -177,7 +156,7 @@ for ii = 1:2
     elseif ii == 2
         rutas = [x; y];
     end
-    disp(size(rutas,2))
+    
     for i = 1:size(rutas,2)
         [theta1, theta2] = inversa(rutas(1,i), rutas(2,i), L1, L2);
         angulo_e1(i + size(x_r,2)*(ii>1)) = theta1;
@@ -202,7 +181,7 @@ for ii = 1:2
 %         end
         
 
-        pause(v_p(ii))
+        pause(0.001)
         
         %         if i==nt
         %             plot([x(in)],[y(in)],'x','MarkerSize',10,'MarkerEdgeColor','k');hold on
@@ -211,49 +190,23 @@ for ii = 1:2
     
 end
 
+
+
+
 % close(v);
+
+
+
 
 
 %% Análisis cinemático
 
 
-% Posición angular---------------------------------------------------------
-
-figure('Name','Ángulos','NumberTitle','off');
-tiledlayout(2,1)
-
-ax1 = nexttile;
-plot(ax1,tiempo, angulo_e1*180/pi);
-title(ax1,'Theta_1')
-ylabel(ax1,'Ángulo (°)')
-xlabel(ax1,'Tiempo (s)')
-
-ax2 = nexttile;
-plot(ax2,tiempo, angulo_e2*180/pi + angulo_e1*180/pi);
-title(ax2,'Theta_2')
-ylabel(ax2,'Ángulo (°)')
-xlabel(ax2,'Tiempo (s)')
-
-
 % Velocidad angular--------------------------------------------------------
 
-omega_1 = [0 diff(angulo_e1)/dt];
-omega_2 = [0 diff(angulo_e2)/dt] + omega_1;
+omega_1 = gradient(angulo_e1)./gradient(tiempo);
+omega_2 = gradient(angulo_e2)./gradient(tiempo) + omega_1;
 
-figure;
-tiledlayout(2,1)
-
-ax1 = nexttile;
-plot(ax1,tiempo(1:end),omega_1);
-title(ax1,'Omega_1')
-ylabel(ax1,'Velocidad angular (rad/s)')
-xlabel(ax1,'Tiempo (s)')
-
-ax2 = nexttile;
-plot(ax2,tiempo(1:end),omega_2);
-title(ax2,'Omega_2')
-ylabel(ax2,'Velocidad angular (rad/s)')
-xlabel(ax2,'Tiempo (s)')
 
 % Velocidad lineal---------------------------------------------------------
 
@@ -269,48 +222,16 @@ vyBA = L2*omega_2.*cos(angulo_2_v);
 vxB = vxA + vxBA;
 vyB = vyA + vyBA;
 
-% figure();
-% tiledlayout(2,1)
-% 
-% ax1 = nexttile;
-% 
-% plot(ax1,-vxB(101:149));
-% hold on;
-% plot(ax1,vx);
-% hold on;
-% legend(ax1,"vxB","vx");
-% 
-% 
-% ax2 = nexttile;
-% 
-% plot(ax2,vy);
-% hold on;
-% plot(ax2,vyB(101:149));
-% legend(ax2,"vy","vyB");
-
 
 
 % Aceleración angular------------------------------------------------------
 
 
-alpha_1 = [diff(omega_1)/dt 0];
-alpha_2 = [diff(omega_2)/dt 0] + alpha_1;
+alpha_1 = gradient(omega_1)./gradient(tiempo(1:end));
+alpha_2 = gradient(omega_2)./gradient(tiempo(1:end)) + alpha_1;
 
 
-figure;
-tiledlayout(2,1)
 
-ax1 = nexttile;
-plot(ax1,tiempo(1:end),alpha_1);
-title(ax1,'Alpha_1')
-ylabel(ax1,'Aceleración angular (rad/s^2)')
-xlabel(ax1,'Tiempo (s)')
-
-ax2 = nexttile;
-plot(ax2,tiempo(1:end),alpha_2);
-title(ax2,'Alpha_2')
-ylabel(ax2,'Aceleración angular (rad/s^2)')
-xlabel(ax2,'Tiempo (s)')
 
 % Aceleración lineal ------------------------------------------------------
 
@@ -331,6 +252,51 @@ ayG1 = ayA/2;
 
 axG2 = axA + axBA/2;
 ayG2 = ayA + ayBA/2;
+
+
+
+
+% Gráficas ---------------------------------------------------------
+
+figure('Name','Cinemática','NumberTitle','off');
+tiledlayout(3,2)
+
+ax1 = nexttile;
+plot(ax1,tiempo, angulo_e1*180/pi);
+title(ax1,'Theta_1')
+ylabel(ax1,'Ángulo (°)')
+xlabel(ax1,'Tiempo (s)')
+
+ax2 = nexttile;
+plot(ax2,tiempo, angulo_e2*180/pi + angulo_e1*180/pi);
+title(ax2,'Theta_2')
+ylabel(ax2,'Ángulo (°)')
+xlabel(ax2,'Tiempo (s)')
+
+ax3 = nexttile;
+plot(ax3,tiempo(1:end),omega_1);
+title(ax3,'Omega_1')
+ylabel(ax3,'Velocidad angular (rad/s)')
+xlabel(ax3,'Tiempo (s)')
+
+ax4 = nexttile;
+plot(ax4,tiempo(1:end),omega_2);
+title(ax4,'Omega_2')
+ylabel(ax4,'Velocidad angular (rad/s)')
+xlabel(ax4,'Tiempo (s)')
+
+ax5 = nexttile;
+plot(ax5,tiempo(1:end),alpha_1);
+title(ax5,'Alpha_1')
+ylabel(ax5,'Aceleración angular (rad/s^2)')
+xlabel(ax5,'Tiempo (s)')
+
+ax6 = nexttile;
+plot(ax6,tiempo(1:end),alpha_2);
+title(ax6,'Alpha_2')
+ylabel(ax6,'Aceleración angular (rad/s^2)')
+xlabel(ax6,'Tiempo (s)')
+
 
 %% Análisis de fuerzas
 

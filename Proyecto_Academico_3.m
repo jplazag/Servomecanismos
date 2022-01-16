@@ -1,10 +1,7 @@
 close all
 clear
 
-
-
 dt = 0.05;
-
 
 r0 = 10;
 ra = r0*3/10;
@@ -14,7 +11,7 @@ y0 = 15;
 theta0_f = 45*pi/180;
 theta_f = flip(0:dt:2*pi); %linspace(0,2*pi,nt);
 r = r0-ra*sin(n*(theta_f + theta0_f));
-scale = 1.3;
+scale = 1;
 
 % R = sqrt(x.^2+y.^2);
 % disp(max(R));
@@ -88,26 +85,28 @@ tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt];
 %% Pruebas de velocidad lineal 
 
 rutas_x = [x_r x];
-rutas_y = [y_r y];
+rutas_y = [y_r y]; 
+
+limit = 0.8;
+s = 0;
 
 while true
+    velocidad_x = gradient(rutas_x)./gradient(tiempo);
+    velocidad_y = gradient(rutas_y)./gradient(tiempo);
+    
+    velocidad = sqrt(velocidad_x.^2 + velocidad_y.^2);
+    
+    velocidad_m = rms(velocidad( size(x_r,2):end ));
 
-velocidad_x = gradient(rutas_x)./gradient(tiempo);
-velocidad_y = gradient(rutas_y)./gradient(tiempo);
+    if (round(velocidad_m,3) <= 10.0)     
+       break 
+    end
+    
+    tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt]*velocidad_m/10;
 
-velocidad = sqrt(velocidad_x.^2 + velocidad_y.^2);
-
-velocidad_m = mean(velocidad( size(x_r,2):end ));
-
-if velocidad_m <= 10
-   break 
 end
 
-tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt]*velocidad_m/10;
-
-end
-
-disp(velocidad_m)
+disp(velocidad_m);
 
 figure
 plot(tiempo, velocidad);
@@ -190,14 +189,7 @@ for ii = 1:2
     
 end
 
-
-
-
 % close(v);
-
-
-
-
 
 %% Análisis cinemático
 
@@ -380,13 +372,8 @@ for iii = 1:size(angulo_e1,2)
     F21x(iii) = X(4);
     F21y(iii) = X(5);
     T12(iii) = X(6);
-    
-    
-    
-    
+     
 end
-
-
 
 figure;
 tiledlayout(2,1)
@@ -405,6 +392,97 @@ xlabel(ax2,'Tiempo (s)')
 
 % figure;
 % plot(X(3,:));
+
+%% Código para selección de servmotores
+rad2rpm = 9.5493;
+
+% Velocidad angular maxima
+omega_1_max = max(omega_1); % rad/s
+omega_2_max = max(omega_2); % rad/s
+
+omega_1_rms = rms(omega_1); % rad/s
+omega_2_rms = rms(omega_2); % rad/s
+
+% Se realiza un suavizado del vector para eliminar picos
+T01_peak = max(T01);
+T01_rms = rms(T01);
+
+T12_peak = max(T12);
+T12_rms = rms(T12);
+
+% Potencia
+power_1 = omega_1.*T01; % w
+power_1_peak = max(power_1); % w
+power_1_rms = rms(power_1); % w
+
+power_2 = omega_2.*T12; % w
+power_2_peak = max(power_2); % w
+power_2_rms = rms(power_2); % w
+
+% Intertia ratio
+
+motor_names = ["DC022C-1" "DC022C-2" "DC022C-3" "DC026C-1" "DC026C-2" "DC026C-3" "DC030B-1" "DC030B-2" "DC030B-3" "DC030C-1" "DC030C-2" "DC030C-3" "DC040B-1" "DC040B-2" "DC040B-3" "DC040B-4" "DC040B-5" "DC040B-6" "DC054B-1"	"DC054B-2" "DC054B-3" "DC054B-4" "DC054B-5" "DC054B-6" "DC054B-7" "DC083A-1" "DC083A-2" "DC083A-3" "DC083A-4"];
+motor_inertias = [0.00000052 0.00000068	0.00000081 0.00000099	0.0000012	0.0000016 0.00000099	0.0000012	0.0000016 0.000002	0.0000037	0.0000058 0.0000019	0.0000032	0.0000042	0.0000056	0.0000071	0.0000085 0.000011	0.000016	0.000021	0.000026	0.000031	0.000037	0.000047 1.31E-04 	2.27E-04 	3.30E-04 	4.33E-04];
+motor_continuos_torques = [0.0057	0.0093	0.014 0.014	0.017	0.022 0.011	0.014	0.018 0.019	0.041	0.060 0.017	0.033	0.043	0.049	0.067	0.081 0.071	0.099	0.15	0.18	0.22	0.26	0.35 0.53 	0.85  	1.20 	1.59];
+motor_peak_torques = [0.018	0.037	0.066 0.059	0.084	0.13 0.045	0.065	0.10 0.068	0.22	0.36 0.086	0.20	0.26	0.32	0.40	0.50 0.39	0.67	1.0	1.3	1.4	1.8	2.6 2.65 	4.24  	6.00 	7.94];
+IG1_O1 = IG1 + m1*L1/2*1e-2;
+IG2_O2 = IG2 + m2*L2/2*1e-2;
+IG2_O1 = IG2 + m2*(L1+L2/2);
+intertia_ratios_motor_1 = (IG1_O1+IG2_O1)./motor_inertias;
+intertia_ratios_motor_2 = (IG2_O2)./motor_inertias;
+
+intertia_ratio_aparente = 5;
+
+N_motor_1 = sqrt(intertia_ratios_motor_1/intertia_ratio_aparente);
+N_motor_2 = sqrt(intertia_ratios_motor_2/intertia_ratio_aparente);
+
+T_aparante_motor_1 = T01_rms./N_motor_1;
+T_aparante_motor_2 = T12_rms./N_motor_2;
+
+factores_seguridad_torque_motor_1 = motor_continuos_torques./T_aparante_motor_1;
+factores_seguridad_torque_motor_2 = motor_continuos_torques./T_aparante_motor_2;
+
+seleccionado_1 = 20;
+N_catalogo_1 = 218.4;
+omega_max_motor_1 = 6000;
+
+disp("Motor_1 seleccionado: " + motor_names(seleccionado_1))
+if omega_1_max*N_catalogo_1 < omega_max_motor_1/rad2rpm
+    disp("----El motor cumple el requisito de velocidad angular");
+    disp("--------Velocidad angular maxima alcanzada: " + omega_1_max*N_catalogo_1*rad2rpm + " RPM")
+    disp("--------Velocidad angular limite: " + omega_max_motor_1 + " RPM")
+end
+
+if T01_rms/N_catalogo_1 < motor_continuos_torques(seleccionado_1)
+    disp("----El motor cumple el requisito de torque");
+    disp("--------Torque rms aplicado: " + T01_rms/N_catalogo_1 + " N m")
+    disp("--------Torque rms limite: " + motor_continuos_torques(seleccionado_1) + " RPM")
+end
+
+disp("La relación de inercias es " + (intertia_ratios_motor_1(seleccionado_1)/N_catalogo_1^2))
+
+
+%% Código para selección de rodamientos
+
+%Con rodamiento SKF 618/7   % Rodamiento de dimetro interno 7mm
+%C0=0.26*1000; %N
+%C= 0.78*1000; %N
+
+%Con rodamiento SKF 617/7   % Rodamiento de dimetro interno 7mm
+C0=0.04*1000; %N
+C= 0.26*1000; %N
+
+P01 = sqrt(F01x.^2+F01y.^2);
+P21 = sqrt(F21x.^2+F21y.^2);
+
+P01f=rms(P01)*1.3*5; %1.3 de correa dentada, 5 como factor de seguridad propio
+P21f = rms(P21)*1.3*5;
+
+s01=C0/P01f;
+s21=C0/P21f;
+
+L01= (C/P01f)^3; %millones de revoluciones
+L21= (C/P21f)^3; %millones de revoluciones
 
 function[theta1, theta2] = inversa(Px,Py,L1,L2)
     r1 = sqrt(Px^2 + Py^2);

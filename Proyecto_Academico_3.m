@@ -104,12 +104,6 @@ while true
     
     tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt]*velocidad_m/10;
 
-velocidad = sqrt(velocidad_x.^2 + velocidad_y.^2);
-
-velocidad_m = mean(velocidad( size(x_r,2):end ));
-
-if velocidad_m <= 10
-   break 
 end
 
 disp(velocidad_m);

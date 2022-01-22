@@ -238,11 +238,11 @@ alpha_2 = gradient(omega_2)./gradient(tiempo(1:end)) + alpha_1;
 angulo_1_a = angulo_e1(1:end);
 angulo_2_a = angulo_e2(1:end) + angulo_1_a;
 
-axA = L1*alpha_1.*sin(angulo_1_a) - L1*omega_1.^2.*cos(angulo_1_a);
-ayA = L1*alpha_1.*cos(angulo_1_a) - L1*omega_1.^2.*sin(angulo_1_a);
+axA = L1/100*alpha_1.*sin(angulo_1_a) - L1/100*omega_1.^2.*cos(angulo_1_a);
+ayA = L1/100*alpha_1.*cos(angulo_1_a) - L1/100*omega_1.^2.*sin(angulo_1_a);
 
-axBA = L2*alpha_2.*sin(angulo_2_a) - L2*omega_2.^2.*cos(angulo_2_a);
-ayBA = L2*alpha_2.*cos(angulo_2_a) - L2*omega_2.^2.*sin(angulo_2_a);
+axBA = L2/100*alpha_2.*sin(angulo_2_a) - L2/100*omega_2.^2.*cos(angulo_2_a);
+ayBA = L2/100*alpha_2.*cos(angulo_2_a) - L2/100*omega_2.^2.*sin(angulo_2_a);
 
 axB = axA + axBA;
 ayB = ayA + ayBA;
@@ -301,17 +301,17 @@ xlabel(ax6,'Tiempo (s)')
 %% Análisis de fuerzas
 
 % Momentos de inercia -----------------------------------------------------
-Den_Acrilico = 1.18 / 1000; %g/cm^3
+Den_Acrilico = 1.18 / 1000; %kg/cm^3
 
 m1 = Den_Acrilico * L1 * 4 * 1 ; % kg
 
 m2 = Den_Acrilico * L2 * 4 * 1 ; % kg
 
-IG1 = 1/12 * m1 * L1^2 / 100^2; % kg*m^2
+IG1 = 1/12 * m1 * L1^2 / (100^2); % kg*m^2
 
-IG2 = 1/12 * m2 * L2^2 / 100^2; % kg*m^2
+IG2 = 1/12 * m2 * L2^2 / (100^2); % kg*m^2
 
-g = 9.81; % cm/s^2
+g = 9.81; % m/s^2
 
 % Ecuaciones --------------------------------------------------------------
 
@@ -380,10 +380,7 @@ for iii = 1:size(angulo_e1,2)
     F21x(iii) = X(4);
     F21y(iii) = X(5);
     T12(iii) = X(6);
-    
-    
-    
-    
+
 end
 
 
@@ -406,6 +403,59 @@ xlabel(ax2,'Tiempo (s)')
 % figure;
 % plot(X(3,:));
 
+%% Mecánica lagrangiana
+
+    lc1 = L1/2 / 100;
+    lc2 = L2/2 / 100;
+    l1 = L1/100;
+    l2 = L2/100;
+    Iz1 = IG1;
+    Iz2 = IG2;
+
+for contador = 1:size(angulo_e1,2)
+    
+    
+    t1 = angulo_e1(contador);
+    t2 = angulo_e2(contador);
+    omega1 = omega_1(contador);
+    omega2 = omega_2(contador);
+    alpha1 = alpha_1(contador);
+    alpha2 = alpha_2(contador);
+
+
+    A = m1 * lc1^2 + Iz1 + m2 * l1^2 + m2 * lc2^2 + Iz2 + 2 * m2 * l1 * lc2 * cos(t2);
+    B = m2 * lc2^2 + Iz2 + m2 * l1 * lc2 * cos(t2);
+    D = 2 * m2 * l1 * lc2 * sin(t2);
+    E = 2 * m2 * l1 * lc2 * sin(t2);
+
+    T1(contador) = A * alpha1 + B * alpha2 + D * omega1*omega2 + E * omega2^2 + g * ((m1*lc1 + m2*l1)*cos(t1) + m2*lc2*cos(t1 + t2));
+
+    F = m2 * lc2^2 + m2 * l1 * lc2 * cos(t2) + Iz2;
+    H = m2 * lc2^2 + Iz2;
+    N = m2 * l1 * lc2 * sin(t2);
+
+    T2(contador) = F * alpha1 + H * alpha2 + N * omega1 * omega2 + m2 * l1 * lc2 * sin(t2) * omega1 * (omega1 + omega2) + m2 * g * lc2 * cos(t1 + t2); 
+
+end
+
+figure;
+tiledlayout(2,1)
+
+ax1 = nexttile;
+plot(ax1,tiempo,T1);
+title(ax1,'Torque_1')
+ylabel(ax1,'Torque (N-m)')
+xlabel(ax1,'Tiempo (s)')
+
+ax2 = nexttile;
+plot(ax2,tiempo,T2);
+title(ax2,'Torque_2')
+ylabel(ax2,'Torque (N-m)')
+xlabel(ax2,'Tiempo (s)')
+
+
+
+%% Funciones
 function[theta1, theta2] = inversa(Px,Py,L1,L2)
     r1 = sqrt(Px^2 + Py^2);
     M = (r1^2 - L1^2 - L2^2)/(2 * L1 * L2);

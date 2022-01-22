@@ -1,0 +1,14 @@
+﻿"Symbol";"Value";"Unit";
+"SUPPLIER_NAME";"AutomationDirect";"";
+"TraceParts.PartVersion";"1.0.8";"";
+"TraceParts.PartStatus";"Published";"";
+"TraceParts.PartNumber";"90-18072019-047428";"";
+"TraceParts.PartLanguage";"en";"";
+"DESIGN";"SureMotion timing pulley, aluminum, 1/5in XL pitch, 10 tooth, 0.637in pitch diameter, 1/4in bore, hub with flanges. For use with 1/4in wide belt.";"";
+"TraceParts.InstanceId";"90-18072019-04742878P2ST6ENTHNY6M228NL8S6AD";"";
+"TraceParts.PartTitle";"SureMotion timing pulley, aluminum, 1/5in XL pitch, 10 tooth, 0.637in pitch diameter, 1/4in bore, hub with flanges. For use with 1/4in wide belt.";"";
+"TraceParts.PartStatusId";"";"";
+"TRACEPARTS";"TRACEPARTS";"";
+"Part_Number_EShop_URL";"http://www.adcpn.com/pn/APB10XL025BF-250";"";
+"TraceParts.ClassPath";"/F_AUTOMATION_DIRECT/AD.755373/AD.755373.1096481/AD.755373.1096481.1096483/AD.755373.1096481.1096483.1311326/";"";
+"SUPPLIER_PART_NUMBER";"APB10XL025BF-250";"";

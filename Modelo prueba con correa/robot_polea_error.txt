@@ -1,0 +1,13 @@
+Constrained Instances: 'V-Belt transmission:1', ''
+Constraint Name: Custom:1
+Error Details: Constraint is not supported. The constraint has been exported as unknown constraint.
+---------------------------------------------------------------------------------
+Constrained Instances: 'V-Belt transmission:1', 'pin2:1'
+Constraint Name: Custom:2
+Error Details: Constraint is not supported. The constraint has been exported as unknown constraint.
+---------------------------------------------------------------------------------
+Constrained Instances: 'V-Belt transmission:1', 'pin2:2'
+Constraint Name: Custom:3
+Error Details: Constraint is not supported. The constraint has been exported as unknown constraint.
+---------------------------------------------------------------------------------
+

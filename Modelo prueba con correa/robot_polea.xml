@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<SimscapeMultibodyImportXML version="2.0" xmlns="urn:mathworks:SimscapeMultibody:import" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Created by="Yeison" on="01/22/22||16:15:02" using="Simscape Multibody Link Version 7.4" from="Autodesk Inventor 2021 (Build 250183000. 183)"/>
+<ModelUnits mass="kilogram" length="millimeter"/>
+<DataUnits mass="kilogram" length="centimeter"/>
+<RootAssembly name="robot_polea.iam" uid="robot_polea.iam_{6DF95EA2-4431-7414-1CE3-A28F7ED93337}" version="{83F74F47-BCCD-8FEB-2689-1888566275AD}">
+<AssemblyFile name="robot_polea.iam" type="Inventor Assembly"/>
+<InstanceTree>
+<Instance name="Soporte:1" grounded="true" uid="Soporte:1" entityUid="Soporte.ipt_{A0606533-4230-6711-DFA6-8AAFFD99665E}">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-1.2636611833557734 -0.072267823673902831 -1.4999999999999982</Translation>
+</Transform>
+</Instance>
+<Instance name="pin2:1" uid="pin2:1" entityUid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}">
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>-1.2636611833557734 -0.072267823673902831 -4.4999999999999982</Translation>
+</Transform>
+</Instance>
+<Instance name="Eslabon:1" uid="Eslabon:1" entityUid="Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}">
+<Transform>
+<Rotation>0.9308584180583438 -0.36538008365251362 0 0.36538008365251368 0.9308584180583438 0 0 0 1.0000000000000002</Rotation>
+<Translation>8.7430668107714258 3.8555680755906212 -3.4999999999999987</Translation>
+</Transform>
+</Instance>
+<Instance name="pin2:2" uid="pin2:2" entityUid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}">
+<Transform>
+<Rotation>-0.97494438319301924 -0.22244875742608691 0 0.22244875742608691 -0.97494438319301924 0 0 0 1.0000000000000002</Rotation>
+<Translation>18.74979480489862 7.7834039748551405 -3.4999999999999987</Translation>
+</Transform>
+</Instance>
+<Instance name="Eslabon:2" uid="Eslabon:2" entityUid="Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}">
+<Transform>
+<Rotation>0.22244875742608372 -0.97494438319300514 0 0.97494438319300514 0.22244875742608372 0 0 0 1.0000000000000002</Rotation>
+<Translation>21.141118947229014 18.264056094179942 -2.5000000000000004</Translation>
+</Transform>
+</Instance>
+<Instance name="V-Belt transmission:1" grounded="true" uid="V-Belt transmission:1" entityUid="V-Belt transmission_{F2D9A1E8-41DD-442F-B328-65812716CBB5}" rigid="true">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+<Instance name="V-Belt:1" grounded="true" uid="V-Belt:1" entityUid="V-Belt_{707F1982-4EF7-6323-1265-0F8F978203D0}">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-1.2636611833557734 0.0027321763260973464 -1.1062999999999983</Translation>
+</Transform>
+</Instance>
+<Instance name="Grooved Pulley1:1" uid="Grooved Pulley1:1" entityUid="Grooved Pulley1_{DF90438A-4F86-11A9-A893-14A928022253}">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>-1.2636611833557734 -0.072267823673902651 -1.6062999999999987</Translation>
+</Transform>
+</Instance>
+<Instance name="Grooved Pulley2:1" uid="Grooved Pulley2:1" entityUid="Grooved Pulley2_{581F8C68-49DF-4AA8-30A3-F0B910F44E67}">
+<Transform>
+<Rotation>1 0 0 0 1 0 0 0 1</Rotation>
+<Translation>18.749794804898229 7.7834039748550978 -1.606299999999999</Translation>
+</Transform>
+</Instance>
+</Instance>
+</InstanceTree>
+<Constraints>
+<Distance name="Flush:1">
+<ConstraintGeometry geomType="plane">
+<InstancePath>
+<Uid>Soporte:1</Uid>
+</InstancePath>
+<Position>0 0.075000000000000178 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<Position>-1.2636611833557734 0.0027321763260973464 -1.1062999999999983</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</Distance>
+<UnknownConstraint name="Custom:1">
+<ConstraintGeometry geomType="point">
+<InstancePath>
+<Uid>V-Belt transmission:1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="plane">
+<Position>-1.2636611833557734 0.0027321763260973464 -1.1062999999999983</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</UnknownConstraint>
+<UnknownConstraint name="Custom:2">
+<ConstraintGeometry geomType="point">
+<InstancePath>
+<Uid>V-Belt transmission:1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>pin2:1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+<Axis>0 0 1</Axis>
+</ConstraintGeometry>
+</UnknownConstraint>
+<UnknownConstraint name="Custom:3">
+<ConstraintGeometry geomType="point">
+<InstancePath>
+<Uid>V-Belt transmission:1</Uid>
+</InstancePath>
+<Position>0 0 0</Position>
+</ConstraintGeometry>
+<ConstraintGeometry geomType="cylinder">
+<InstancePath>
+<Uid>pin2:2</Uid>
+</InstancePath>
+<Position>-3.5527136788005009e-15 0 0</Position>
+<Axis>0 0 0.99999999999999978</Axis>
+</ConstraintGeometry>
+</UnknownConstraint>
+</Constraints>
+<Joints>
+<Revolute name="Rotational:1">
+<BaseFrame>
+<InstancePath>
+<Uid>Soporte:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 -1 0 -1 0 0 0 0 -1</Rotation>
+<Translation>0 0 -3</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>pin2:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 0 0 0 0 0 0 0 -1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</FollowerFrame>
+</Revolute>
+<Revolute name="Rotational:2">
+<BaseFrame>
+<InstancePath>
+<Uid>Soporte:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>0 0 -2</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>Eslabon:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 1 0 -1 0 0 0 0 1</Rotation>
+<Translation>-10.75 0 0</Translation>
+</Transform>
+</FollowerFrame>
+</Revolute>
+<Revolute name="Rotational:3">
+<BaseFrame>
+<InstancePath>
+<Uid>Eslabon:1</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 1 0 1 0 0 0 0 -1</Rotation>
+<Translation>10.75 0 0</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>pin2:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 0 0 0 0 0 0 0 -1</Rotation>
+<Translation>0 0 0</Translation>
+</Transform>
+</FollowerFrame>
+</Revolute>
+<Weld name="Rigid:1">
+<BaseFrame>
+<InstancePath>
+<Uid>pin2:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 0 0 0 0 0 0 0 1</Rotation>
+<Translation>0 0 2</Translation>
+</Transform>
+</BaseFrame>
+<FollowerFrame>
+<InstancePath>
+<Uid>Eslabon:2</Uid>
+</InstancePath>
+<Transform>
+<Rotation>0 -1 0 1 0 0 0 0 1</Rotation>
+<Translation>-10.75 0 1</Translation>
+</Transform>
+</FollowerFrame>
+</Weld>
+</Joints>
+</RootAssembly>
+<Assemblies>
+<Assembly name="V-Belt transmission" uid="V-Belt transmission_{F2D9A1E8-41DD-442F-B328-65812716CBB5}" version="">
+<AssemblyFile name="V-Belt transmission1.iam" type="Inventor Assembly"/>
+</Assembly>
+</Assemblies>
+<Parts>
+<Part name="Eslabon.ipt" uid="Eslabon.ipt_{AE7C2FE2-4E44-6EDB-EB86-C1AC78484A19}" version="{3F126BAF-AD85-688C-C846-3B58D9A9554A}">
+<PartFile name="Eslabon.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.096665707058937247</Mass>
+<CenterOfMass>1.1337434432338879e-12 0 0.5</CenterOfMass>
+<Inertia>0.13514477521573634 4.7951588805103746 4.9141927045496221 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Eslabon_ipt_288d88c6.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Grooved Pulley1" uid="Grooved Pulley1_{DF90438A-4F86-11A9-A893-14A928022253}" version="">
+<PartFile name="Grooved Pulley11.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0230594366289412</Mass>
+<CenterOfMass>0 3.2272674098054071e-10 0.49999999999999956</CenterOfMass>
+<Inertia>0.0089494950725709961 0.0089494976690746939 0.01285500340162358 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Grooved Pulley1_ipt_9e782169.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.8784313725490196" g="0.87450980392156863" b="0.85882352941176465" a="1"/>
+<Diffuse r="0.8784313725490196" g="0.87450980392156863" b="0.85882352941176465" a="1"/>
+<Specular r="0.8784313725490196" g="0.87450980392156863" b="0.85882352941176465" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.51500000000000001</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Grooved Pulley2" uid="Grooved Pulley2_{581F8C68-49DF-4AA8-30A3-F0B910F44E67}" version="">
+<PartFile name="Grooved Pulley21.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0230594366289412</Mass>
+<CenterOfMass>0 3.2272674098054071e-10 0.49999999999999956</CenterOfMass>
+<Inertia>0.0089494950725709961 0.0089494976690746939 0.01285500340162358 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="Grooved Pulley2_ipt_ca34646f.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.8784313725490196" g="0.87450980392156863" b="0.85882352941176465" a="1"/>
+<Diffuse r="0.8784313725490196" g="0.87450980392156863" b="0.85882352941176465" a="1"/>
+<Specular r="0.8784313725490196" g="0.87450980392156863" b="0.85882352941176465" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.51500000000000001</Shininess>
+</VisualProperties>
+</Part>
+<Part name="pin2.ipt" uid="pin2.ipt_{04912817-4149-7EDD-C109-1CA4B5F7B0D8}" version="{00B1EEF8-882F-DD0E-D59F-43CF677B7E40}">
+<PartFile name="pin2.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0038013271108434869</Mass>
+<CenterOfMass>1.150247454520353e-10 0 2.0000000000000004</CenterOfMass>
+<Inertia>0.0053559115291121947 0.0053559114548588161 0.00057495068838838944 0 0 0</Inertia>
+</MassProperties>
+<GeometryFile name="pin2_ipt_3660e19a.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+<Part name="Soporte.ipt" uid="Soporte.ipt_{A0606533-4230-6711-DFA6-8AAFFD99665E}" version="{5A826B51-C2AC-B490-71AB-CDCA499E89AB}">
+<PartFile name="Soporte.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.036128781874027724</Mass>
+<CenterOfMass>3.0263493676592898e-12 -0.15068780025989062 -1.4999999999999998</CenterOfMass>
+<Inertia>0.095492217973447549 0.10101728743557037 0.11823047801529123 0 0 -1.6390685220807175e-14</Inertia>
+</MassProperties>
+<GeometryFile name="Soporte_ipt_4102156f.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Diffuse r="0.74901960784313726" g="0.74901960784313726" b="0.74901960784313726" a="1"/>
+<Specular r="0" g="0" b="0" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.14999999999999999</Shininess>
+</VisualProperties>
+</Part>
+<Part name="V-Belt" uid="V-Belt_{707F1982-4EF7-6323-1265-0F8F978203D0}" version="">
+<PartFile name="V-Belt1.ipt" type="Inventor Part"/>
+<MassProperties>
+<Mass>0.0055159831902384234</Mass>
+<CenterOfMass>10.006727994126999 3.8528358992645022 0</CenterOfMass>
+<Inertia>0.041333284943191731 0.23987269876190043 0.28104613258689143 0 0 -0.092124331544267024</Inertia>
+</MassProperties>
+<GeometryFile name="V-Belt_ipt_72b41ed1.STEP" type="STEP"/>
+<VisualProperties>
+<Ambient r="0.25098039215686274" g="0.25098039215686274" b="0.25098039215686274" a="1"/>
+<Diffuse r="0.25098039215686274" g="0.25098039215686274" b="0.25098039215686274" a="1"/>
+<Specular r="1" g="1" b="1" a="1"/>
+<Emissive r="0" g="0" b="0" a="1"/>
+<Shininess>0.54374999999999996</Shininess>
+</VisualProperties>
+</Part>
+</Parts>
+</SimscapeMultibodyImportXML>

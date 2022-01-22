@@ -230,11 +230,11 @@ alpha_2 = gradient(omega_2)./gradient(tiempo(1:end)) + alpha_1;
 angulo_1_a = angulo_e1(1:end);
 angulo_2_a = angulo_e2(1:end) + angulo_1_a;
 
-axA = L1/100*alpha_1.*sin(angulo_1_a) - L1/100*omega_1.^2.*cos(angulo_1_a);
-ayA = L1/100*alpha_1.*cos(angulo_1_a) - L1/100*omega_1.^2.*sin(angulo_1_a);
+axA = L1*alpha_1.*sin(angulo_1_a) - L1*omega_1.^2.*cos(angulo_1_a);
+ayA = L1*alpha_1.*cos(angulo_1_a) - L1*omega_1.^2.*sin(angulo_1_a);
 
-axBA = L2/100*alpha_2.*sin(angulo_2_a) - L2/100*omega_2.^2.*cos(angulo_2_a);
-ayBA = L2/100*alpha_2.*cos(angulo_2_a) - L2/100*omega_2.^2.*sin(angulo_2_a);
+axBA = L2*alpha_2.*sin(angulo_2_a) - L2*omega_2.^2.*cos(angulo_2_a);
+ayBA = L2*alpha_2.*cos(angulo_2_a) - L2*omega_2.^2.*sin(angulo_2_a);
 
 axB = axA + axBA;
 ayB = ayA + ayBA;
@@ -301,7 +301,7 @@ m2 = Den_Acrilico * L2 * 4 * 1 ; % kg
 
 IG1 = 1/12 * m1 * L1^2 / (100^2); % kg*m^2
 
-IG2 = 1/12 * m2 * L2^2 / (100^2); % kg*m^2
+IG2 = 1/12 * m2 * L2^2 / 100^2; % kg*m^2
 
 g = 9.81; % cm/s^2
 

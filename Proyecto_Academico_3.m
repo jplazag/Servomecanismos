@@ -451,7 +451,7 @@ T_aparante_motor_2 = T12_rms./N_motor_2;
 factores_seguridad_torque_motor_1 = motor_continuos_torques./T_aparante_motor_1;
 factores_seguridad_torque_motor_2 = motor_continuos_torques./T_aparante_motor_2;
 
-seleccionado_1 = 20;
+seleccionado_1 = 18;
 N_catalogo_1 = 218.4;
 omega_max_motor_1 = 6000;
 
@@ -469,6 +469,25 @@ if T01_rms/N_catalogo_1 < motor_continuos_torques(seleccionado_1)
 end
 
 disp("La relación de inercias es " + (intertia_ratios_motor_1(seleccionado_1)/N_catalogo_1^2))
+
+seleccionado_2 = 18;
+N_catalogo_2 = 16;
+omega_max_motor_2 = 7000;
+
+disp("Motor_1 seleccionado: " + motor_names(seleccionado_2))
+if omega_2_max*N_catalogo_1 < omega_max_motor_2/rad2rpm
+    disp("----El motor cumple el requisito de velocidad angular");
+    disp("--------Velocidad angular maxima alcanzada: " + omega_2_max*N_catalogo_2*rad2rpm + " RPM")
+    disp("--------Velocidad angular limite: " + omega_max_motor_2 + " RPM")
+end
+
+if T12_rms/N_catalogo_2 < motor_continuos_torques(seleccionado_2)
+    disp("----El motor cumple el requisito de torque");
+    disp("--------Torque rms aplicado: " + T12_rms/N_catalogo_2 + " N m")
+    disp("--------Torque rms limite: " + motor_continuos_torques(seleccionado_2) + " RPM")
+end
+
+disp("La relación de inercias es " + (intertia_ratios_motor_2(seleccionado_2)/N_catalogo_2^2))
 
 
 %% Código para selección de rodamientos

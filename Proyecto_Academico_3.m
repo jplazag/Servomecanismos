@@ -442,44 +442,17 @@ T_aparante_motor_2 = T12_rms./N_motor_2;
 factores_seguridad_torque_motor_1 = motor_continuos_torques./T_aparante_motor_1;
 factores_seguridad_torque_motor_2 = motor_continuos_torques./T_aparante_motor_2;
 
-seleccionado_1 = 18;
+seleccionado_1 = 20;
 N_catalogo_1 = 218.4;
 omega_max_motor_1 = 6000;
 
-disp("Motor_1 seleccionado: " + motor_names(seleccionado_1))
-if omega_1_max*N_catalogo_1 < omega_max_motor_1/rad2rpm
-    disp("----El motor cumple el requisito de velocidad angular");
-    disp("--------Velocidad angular maxima alcanzada: " + omega_1_max*N_catalogo_1*rad2rpm + " RPM")
-    disp("--------Velocidad angular limite: " + omega_max_motor_1 + " RPM")
-end
-
-if T01_rms/N_catalogo_1 < motor_continuos_torques(seleccionado_1)
-    disp("----El motor cumple el requisito de torque");
-    disp("--------Torque rms aplicado: " + T01_rms/N_catalogo_1 + " N m")
-    disp("--------Torque rms limite: " + motor_continuos_torques(seleccionado_1) + " RPM")
-end
-
-disp("La relación de inercias es " + (intertia_ratios_motor_1(seleccionado_1)/N_catalogo_1^2))
+motorCumple(motor_names(seleccionado_1),N_catalogo_1,omega_1_max,T01_rms,T01_peak,IG1_O1+IG2_O1,motor_inertias(seleccionado_1),omega_max_motor_1,motor_continuos_torques(seleccionado_1),motor_peak_torques(seleccionado_1));
 
 seleccionado_2 = 18;
 N_catalogo_2 = 16;
 omega_max_motor_2 = 7000;
 
-disp("Motor_1 seleccionado: " + motor_names(seleccionado_2))
-if omega_2_max*N_catalogo_1 < omega_max_motor_2/rad2rpm
-    disp("----El motor cumple el requisito de velocidad angular");
-    disp("--------Velocidad angular maxima alcanzada: " + omega_2_max*N_catalogo_2*rad2rpm + " RPM")
-    disp("--------Velocidad angular limite: " + omega_max_motor_2 + " RPM")
-end
-
-if T12_rms/N_catalogo_2 < motor_continuos_torques(seleccionado_2)
-    disp("----El motor cumple el requisito de torque");
-    disp("--------Torque rms aplicado: " + T12_rms/N_catalogo_2 + " N m")
-    disp("--------Torque rms limite: " + motor_continuos_torques(seleccionado_2) + " RPM")
-end
-
-disp("La relación de inercias es " + (intertia_ratios_motor_2(seleccionado_2)/N_catalogo_2^2))
-
+motorCumple(motor_names(seleccionado_2),N_catalogo_2,omega_2_max,T12_rms,T12_peak,IG2_O2,motor_inertias(seleccionado_2),omega_max_motor_2,motor_continuos_torques(seleccionado_2),motor_peak_torques(seleccionado_2));
 
 %% Código para selección de rodamientos
 
@@ -566,3 +539,54 @@ function[theta1, theta2] = inversa(Px,Py,L1,L2)
     theta1 = B1 - acos(M2);
     theta2 = acos(M);
 end
+
+function cumple = motorCumple(nombre,N,omega,T_rms,T_peak,inertia_load,inertia_motor,omega_max_motor,motor_continuos_torque,motor_peak_torque)
+
+    rad2rpm = 9.5493;
+    cumple_omega = false;
+    cumple_torque_rms = false;
+    cumple_torque_peak = false;
+    cumple_inertia_ratio = false;
+    
+    disp("Motor seleccionado: " + nombre)
+    if omega*N < omega_max_motor/rad2rpm
+        cumple_omega = true; 
+        disp("----El motor cumple el requisito de velocidad angular");
+    else
+        disp("----El motor no cumple el requisito de velocidad angular");
+    end
+
+    disp("--------Velocidad angular maxima alcanzada: " + omega*N*rad2rpm + " RPM")
+    disp("--------Velocidad angular limite: " + omega_max_motor + " RPM")
+
+    if T_rms/N < motor_continuos_torque
+        cumple_torque_rms = true; 
+        disp("----El motor cumple el requisito de torque continuo");
+    else
+        disp("----El motor no cumple el requisito de torque continuo");
+    end
+
+    disp("--------Torque rms aplicado: " + T_rms/N + " N m")
+    disp("--------Torque rms limite: " + motor_continuos_torque + " RPM")
+
+    if T_peak/N < motor_peak_torque
+        cumple_torque_peak = true;
+        disp("----El motor cumple el requisito de torque pico");
+    else
+        disp("----El motor no cumple el requisito de torque pico");
+    end
+
+    disp("--------Torque peak aplicado: " + T_peak/N + " N m")
+    disp("--------Torque peak limite: " + motor_peak_torque + " RPM")
+    
+    if inertia_load/(inertia_motor*(N^2)) < 10
+        cumple_inertia_ratio = true;
+        disp("----El motor cumple el requisito de inertia ratio");
+    else 
+        disp("----El motor no cumple el requisito de inertia ratio");
+    end
+
+    disp("--------La relación de inercias es " + (inertia_load/(inertia_motor*(N^2))))
+    
+    cumple = cumple_omega & cumple_torque_rms & cumple_torque_peak & cumple_inertia_ratio;
+end 

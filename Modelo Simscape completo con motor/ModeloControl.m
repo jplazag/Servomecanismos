@@ -6,18 +6,18 @@ P2 = 1;
 
 %% MODELO MOTORES
 
-% Modelo motor 1 - REF: DC054B–2
+% Modelo motor 1 - REF: EC042B-3
 % VA = 24V
 Va1 = 24; % V
-Ra1 = 1.73; % Ohms
-La1 = 2.5; % mH
-Kt1 = 0.0551; % Constante de torque (N m)/A
-b1 = 1.1E-05; % (N m) / (rad/s)
-J1 = 1.6E-05; % kg*m^2
-Kb1 = 0.0551; % V/(rad/s)
+Ra1 = 1.09; % Ohms
+La1 = 1.7E-03; % H
+Kt1 = 0.0539; % Constante de torque (N m)/A
+b1 = 6.7E-06; % (N m) / (rad/s)
+J1 =  2.1E-05; % kg*m^2
+Kb1 = 0.0539; % V/(rad/s)
 TL1 = 0;
 
-% Modelo motor 1 - REF: DC054B–2
+% Modelo motor 1 - REF: EC042B-3
 % VA = 24V
 Va2 = Va1; % V
 Ra2 = Ra1; % Ohms
@@ -25,7 +25,7 @@ La2 = La1; % mH
 Kt2 = Kt1; % Constante de torque (N m)/A
 b2 = b1; % (N m) / (rad/s)
 J2 = J1; % kg*m^2
-Kb2 = kb1; % V/(rad/s)
+Kb2 = Kb1; % V/(rad/s)
 TL2 = 0;
 
 %% Caracterización 

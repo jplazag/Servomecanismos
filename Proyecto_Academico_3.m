@@ -421,17 +421,17 @@ power_2_rms = rms(power_2); % w
 
 % Intertia ratio
 
-motor_names = ["DC022C-1" "DC022C-2" "DC022C-3" "DC026C-1" "DC026C-2" "DC026C-3" "DC030B-1" "DC030B-2" "DC030B-3" "DC030C-1" "DC030C-2" "DC030C-3" "DC040B-1" "DC040B-2" "DC040B-3" "DC040B-4" "DC040B-5" "DC040B-6" "DC054B-1"	"DC054B-2" "DC054B-3" "DC054B-4" "DC054B-5" "DC054B-6" "DC054B-7" "DC083A-1" "DC083A-2" "DC083A-3" "DC083A-4"];
-motor_inertias = [0.00000052 0.00000068	0.00000081 0.00000099	0.0000012	0.0000016 0.00000099	0.0000012	0.0000016 0.000002	0.0000037	0.0000058 0.0000019	0.0000032	0.0000042	0.0000056	0.0000071	0.0000085 0.000011	0.000016	0.000021	0.000026	0.000031	0.000037	0.000047 1.31E-04 	2.27E-04 	3.30E-04 	4.33E-04];
-motor_continuos_torques = [0.0057	0.0093	0.014 0.014	0.017	0.022 0.011	0.014	0.018 0.019	0.041	0.060 0.017	0.033	0.043	0.049	0.067	0.081 0.071	0.099	0.15	0.18	0.22	0.26	0.35 0.53 	0.85  	1.20 	1.59];
-motor_peak_torques = [0.018	0.037	0.066 0.059	0.084	0.13 0.045	0.065	0.10 0.068	0.22	0.36 0.086	0.20	0.26	0.32	0.40	0.50 0.39	0.67	1.0	1.3	1.4	1.8	2.6 2.65 	4.24  	6.00 	7.94];
+motor_names = ["DC022C-1" "DC022C-2" "DC022C-3" "DC026C-1" "DC026C-2" "DC026C-3" "DC030B-1" "DC030B-2" "DC030B-3" "DC030C-1" "DC030C-2" "DC030C-3" "DC040B-1" "DC040B-2" "DC040B-3" "DC040B-4" "DC040B-5" "DC040B-6" "DC054B-1"	"DC054B-2" "DC054B-3" "DC054B-4" "DC054B-5" "DC054B-6" "DC054B-7" "DC083A-1" "DC083A-2" "DC083A-3" "DC083A-4" "ES030A-1" "ES030A-2" "EC033A-1" "EC033A-2" "EC033A-3" "ES040A-1" "ES040A-2" "ES040A-3" "EC042B-1" "EC042B-2" "EC042B-3" "EC044A-1" "EC044A-2" "EC044A-3" "ES050A-1" "ES050A-2" "ES050A-3" "EC057C-1" "EC057C-2" "EC057C-3" "EC057C-4" "EC057B-1" "EC057B-2" "EC057B-3" "EC057B-4" "EC057A-1" "EC057A-2" "EC057A-3"];
+motor_inertias = [0.00000052 0.00000068	0.00000081 0.00000099	0.0000012	0.0000016 0.00000099	0.0000012	0.0000016 0.000002	0.0000037	0.0000058 0.0000019	0.0000032	0.0000042	0.0000056	0.0000071	0.0000085 0.000011	0.000016	0.000021	0.000026	0.000031	0.000037	0.000047 1.31E-04 	2.27E-04 	3.30E-04 	4.33E-04 0.00000099	0.0000014 0.0000012	0.0000019	0.0000027 0.0000045	0.0000057	0.0000061 0.000014	0.000018	0.000021 0.0000021	0.000003	0.000004 0.000017	0.000028	0.000034 0.0000042	0.0000078	0.000011	0.000015 0.0000071	0.000012	0.000018	0.000023 0.000013	0.000026	0.000039];
+motor_continuos_torques = [0.0057	0.0093	0.014 0.014	0.017	0.022 0.011	0.014	0.018 0.019	0.041	0.060 0.017	0.033	0.043	0.049	0.067	0.081 0.071	0.099	0.15	0.18	0.22	0.26	0.35 0.53 	0.85  	1.20 	1.59 0.029	0.041 0.025	0.049	0.060 0.084	0.10	0.13 0.064	0.13	0.18 0.044	0.067	0.082 0.18	0.25	0.30 0.078	0.14	0.22	0.28 0.15	0.32	0.40	0.60 0.39	0.71	0.94];
+motor_peak_torques = [0.018	0.037	0.066 0.059	0.084	0.13 0.045	0.065	0.10 0.068	0.22	0.36 0.086	0.20	0.26	0.32	0.40	0.50 0.39	0.67	1.0	1.3	1.4	1.8	2.6 2.65 	4.24  	6.00 	7.94 0.085	0.13 0.081	0.16	0.19 0.26	0.31	0.41 0.20	0.39	0.55 0.20	0.36	0.45 0.54	0.77	0.94 0.25	0.44	0.70	0.88 0.46	0.98	1.3	1.8 1.2	2.2	2.9];
 IG1_O1 = IG1 + m1*L1/2*1e-2;
 IG2_O2 = IG2 + m2*L2/2*1e-2;
 IG2_O1 = IG2 + m2*(L1+L2/2);
 intertia_ratios_motor_1 = (IG1_O1+IG2_O1)./motor_inertias;
 intertia_ratios_motor_2 = (IG2_O2)./motor_inertias;
 
-intertia_ratio_aparente = 5;
+intertia_ratio_aparente = 7;
 
 N_motor_1 = sqrt(intertia_ratios_motor_1/intertia_ratio_aparente);
 N_motor_2 = sqrt(intertia_ratios_motor_2/intertia_ratio_aparente);
@@ -442,15 +442,15 @@ T_aparante_motor_2 = T12_rms./N_motor_2;
 factores_seguridad_torque_motor_1 = motor_continuos_torques./T_aparante_motor_1;
 factores_seguridad_torque_motor_2 = motor_continuos_torques./T_aparante_motor_2;
 
-seleccionado_1 = 20;
-N_catalogo_1 = 218.4;
-omega_max_motor_1 = 6000;
+seleccionado_1 = 40;
+N_catalogo_1 = 200;
+omega_max_motor_1 = 5000;
 
 motorCumple(motor_names(seleccionado_1),N_catalogo_1,omega_1_max,T01_rms,T01_peak,IG1_O1+IG2_O1,motor_inertias(seleccionado_1),omega_max_motor_1,motor_continuos_torques(seleccionado_1),motor_peak_torques(seleccionado_1));
 
-seleccionado_2 = 18;
-N_catalogo_2 = 16;
-omega_max_motor_2 = 7000;
+seleccionado_2 = 40;
+N_catalogo_2 =  16;
+omega_max_motor_2 = 5000;
 
 motorCumple(motor_names(seleccionado_2),N_catalogo_2,omega_2_max,T12_rms,T12_peak,IG2_O2,motor_inertias(seleccionado_2),omega_max_motor_2,motor_continuos_torques(seleccionado_2),motor_peak_torques(seleccionado_2));
 
@@ -548,7 +548,7 @@ function cumple = motorCumple(nombre,N,omega,T_rms,T_peak,inertia_load,inertia_m
     cumple_torque_peak = false;
     cumple_inertia_ratio = false;
     
-    disp("Motor seleccionado: " + nombre)
+    disp("Motor seleccionado: " + nombre + ", con N = " + N)
     if omega*N < omega_max_motor/rad2rpm
         cumple_omega = true; 
         disp("----El motor cumple el requisito de velocidad angular");
@@ -589,4 +589,4 @@ function cumple = motorCumple(nombre,N,omega,T_rms,T_peak,inertia_load,inertia_m
     disp("--------La relación de inercias es " + (inertia_load/(inertia_motor*(N^2))))
     
     cumple = cumple_omega & cumple_torque_rms & cumple_torque_peak & cumple_inertia_ratio;
-end 
+end

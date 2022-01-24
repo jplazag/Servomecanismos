@@ -66,8 +66,8 @@ y_r = pendiente_r * (x_r - x_inicio);
 
 
 % Trayectoria de interés --------------------------------------------------
-
-theta_f = (2*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
+vueltas = 4;
+theta_f = (2*vueltas*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
 
 x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
 y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
@@ -79,8 +79,6 @@ y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
 % Preparación de variables para almacenar los datos a graficar ------------
 
 tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt];
-
-
 
 %% Pruebas de velocidad lineal 
 

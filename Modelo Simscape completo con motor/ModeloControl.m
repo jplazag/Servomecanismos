@@ -1,9 +1,3 @@
-%% MODELO CONTROL
-% Constante proporcional motor1
-P1 = tf(50);
-% Constante proporcional motor2
-P2 = tf(50);
-
 %% MODELO MOTORES
 
 % Modelo motor 1 - REF: EC042B-3
@@ -31,26 +25,53 @@ TL2 = 0;
 input_a1 = timeseries(angulo_e1+pi/2,tiempo);
 input_a2 = timeseries(angulo_e2-pi,tiempo);
 
-%% Caracterización 
+%% Caracterización por posición
 
 % data1 = load('CaracterizacionPlanta1.mat').data ;
 planta1 = extractTimetable(load('CaracterizacionPlanta1.mat').data );
 planta2 = extractTimetable(load('CaracterizacionPlanta2.mat').data );
 
-[p1, tau_m1, km1] = identificarPlanta(seconds(planta1.Time), planta1.theta1, 20);
-[p2, tau_m2, km2] = identificarPlanta(seconds(planta2.Time), planta2.theta2, 20);
+[p1, tau_m1, km1] = identificarPlantaPosicion(seconds(planta1.Time), planta1.theta1, 20);
+[p2, tau_m2, km2] = identificarPlantaPosicion(seconds(planta2.Time), planta2.theta2, 20);
 
 s = tf('s');
 
 sys1 = km1/(s*(tau_m1*s +1));
 sys2 = km2/(s*(tau_m2*s +1));
 
+%% Caracterización por velocidad
+planta1 = extractTimetable(load('CaracterizacionPlanta1.mat').data );
+planta2 = extractTimetable(load('CaracterizacionPlanta2.mat').data );
+s = tf('s');
+[tau_m1, km1] = identificarPlantaVelocidad(seconds(planta1.Time), planta1.Wm1, 20);
+[tau_m2, km2] = identificarPlantaVelocidad(seconds(planta2.Time), planta2.Wm2, 20);
+
+tf_sys1 = km1/(tau_m1*s +1);
+tf_sys2 = km2/(tau_m2*s +1);
+
+tf_pos1 = tf_sys1 * (1/s);
+tf_pos2 = tf_sys2 * (1/s);
+zeta = 1; % Criticamente amortiguado
+% Constante proporcional motor1
+P1 = 1 / (4*km1*tau_m1*zeta^2);
+% Constante proporcional motor2
+P2 = 1 / (4*km2*tau_m2*zeta^2);
+
 %% Functions
-function [p, tau_m, Km] = identificarPlanta(x, y, A)
+function [tau, Km] =  identificarPlantaVelocidad(x,y, Vin)
+    maxVel = max(y);
+    bin = y >= 0.9502129 * maxVel;
+    pos_tau = find(bin, 1, "first");
+    tau = x(pos_tau - 1)/3;
+    Km = y(end)/Vin;
+    plot(x,y);
+end
+
+function [p, tau_m, Km] = identificarPlantaPosicion(x, y, A)
     figure
 
     % zona de rampa para tiempo de caract 2.5
-    init = 0.12; % 0.3 s inicio
+    init = 0.03; % 0.1 s inicio
     endr = 0.80; % 2 s fin
     samples = size(x, 1);
     x_ramp = x(round(init*samples):round(endr*samples));

@@ -1,8 +1,8 @@
 %% MODELO CONTROL
 % Constante proporcional motor1
-P1 = 1;
+P1 = tf(50);
 % Constante proporcional motor2
-P2 = 1;
+P2 = tf(50);
 
 %% MODELO MOTORES
 
@@ -28,6 +28,9 @@ J2 = J1; % kg*m^2
 Kb2 = Kb1; % V/(rad/s)
 TL2 = 0;
 
+input_a1 = timeseries(angulo_e1+pi/2,tiempo);
+input_a2 = timeseries(angulo_e2-pi,tiempo);
+
 %% Caracterización 
 
 % data1 = load('CaracterizacionPlanta1.mat').data ;
@@ -36,6 +39,11 @@ planta2 = extractTimetable(load('CaracterizacionPlanta2.mat').data );
 
 [p1, tau_m1, km1] = identificarPlanta(seconds(planta1.Time), planta1.theta1, 20);
 [p2, tau_m2, km2] = identificarPlanta(seconds(planta2.Time), planta2.theta2, 20);
+
+s = tf('s');
+
+sys1 = km1/(s*(tau_m1*s +1));
+sys2 = km2/(s*(tau_m2*s +1));
 
 %% Functions
 function [p, tau_m, Km] = identificarPlanta(x, y, A)

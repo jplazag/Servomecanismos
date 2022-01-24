@@ -295,13 +295,13 @@ xlabel(ax6,'Tiempo (s)')
 % Momentos de inercia -----------------------------------------------------
 Den_Acrilico = 1.18 / 1000; % kg/cm^3
 
-m1 = Den_Acrilico * L1 * 4 * 1 ; % kg
+m1 = 0.114046 %Den_Acrilico * L1 * 4 * 1 ; % kg
 
-m2 = Den_Acrilico * L2 * 4 * 1 ; % kg
+m2 = 0.114046 %Den_Acrilico * L2 * 4 * 1 ; % kg
 
-IG1 = 1/12 * m1 * L1^2 / (100^2); % kg*m^2
+IG1 = 0.000579579%1/12 * m1 * L1^2 / (100^2); % kg*m^2
 
-IG2 = 1/12 * m2 * L2^2 / (100^2); % kg*m^2
+IG2 = 0.000579579%1/12 * m2 * L2^2 / (100^2); % kg*m^2
 
 g = 9.81; % cm/s^2
 
@@ -431,7 +431,7 @@ IG2_O1 = IG2 + m2*(L1+L2/2);
 intertia_ratios_motor_1 = (IG1_O1+IG2_O1)./motor_inertias;
 intertia_ratios_motor_2 = (IG2_O2)./motor_inertias;
 
-intertia_ratio_aparente = 7;
+intertia_ratio_aparente = 4;
 
 N_motor_1 = sqrt(intertia_ratios_motor_1/intertia_ratio_aparente);
 N_motor_2 = sqrt(intertia_ratios_motor_2/intertia_ratio_aparente);

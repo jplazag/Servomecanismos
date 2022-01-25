@@ -2,4 +2,4 @@ run ("Proyecto_Academico.m");
 
 run("ModeloControl.m");
 
-sim("LazosControl.slx",tiempo(end))
+sim("LazosControl.slx",tiempo(end));

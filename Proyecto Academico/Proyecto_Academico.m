@@ -6,6 +6,8 @@ scale = 1.3;
 rota=90; 
 vueltas = 2;
 
+
+
 dt = 0.05;
 
 r0 = 10;

@@ -59,12 +59,24 @@ P2 = 1 / (4*km2*tau_m2*zeta^2);
 
 %% Functions
 function [tau, Km] =  identificarPlantaVelocidad(x,y, Vin)
+    figure
     maxVel = max(y);
     bin = y >= 0.9502129 * maxVel;
     pos_tau = find(bin, 1, "first");
     tau = x(pos_tau - 1)/3;
     Km = y(end)/Vin;
     plot(x,y);
+    title('Respuesta al paso')
+    ylabel('Velocidad (rad/s)')
+    xlabel('Tiempo (s)')
+
+    dim = [0.6 0.2 0.3 0.3];
+    str = { strcat('W_{max} = ', num2str(maxVel)), strcat('\tau_m = ', num2str(tau)), strcat('K_m = ',num2str(Km))};
+    annotation('textbox',dim,'String',str,'FitBoxToText','on');
+%     dt = datatip(s,pos_tau, y(pos_tau));
+%     s.DataTipTemplate.DataTipRows(1).Label = 'Drivers (in thousands)';
+%     s.DataTipTemplate.DataTipRows(2).Label = 'Fatalities'; 
+    grid on
 end
 
 function [p, tau_m, Km] = identificarPlantaPosicion(x, y, A)

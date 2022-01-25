@@ -1,35 +1,7 @@
-%% MODELO MOTORES
-
-% Modelo motor 1 - REF: EC042B-3
-% VA = 24V
-Va1 = 24; % V
-Ra1 = 1.09; % Ohms
-La1 = 1.7E-03; % H
-Kt1 = 0.0539; % Constante de torque (N m)/A
-b1 = 6.7E-06; % (N m) / (rad/s)
-J1 =  2.1E-05; % kg*m^2
-Kb1 = 0.0539; % V/(rad/s)
-TL1 = 0;
-
-% Modelo motor 1 - REF: EC042B-3
-% VA = 24V
-Va2 = Va1; % V
-Ra2 = Ra1; % Ohms
-La2 = La1; % mH
-Kt2 = Kt1; % Constante de torque (N m)/A
-b2 = b1; % (N m) / (rad/s)
-J2 = J1; % kg*m^2
-Kb2 = Kb1; % V/(rad/s)
-TL2 = 0;
-
-input_a1 = timeseries(angulo_e1+pi/2,tiempo);
-input_a2 = timeseries(angulo_e2-pi,tiempo);
+car1=sim('PlantaAmpliada1.slx',0.2);
+car2=sim('PlantaAmpliada2.slx',0.2);
 
 %% Caracterización por posición
-
-car1=sim('PlantaAmpliada1.slx',0.2)
-car2=sim('PlantaAmpliada2.slx',0.2)
-
 
 % data1 = load('CaracterizacionPlanta1.mat').data ;
 
@@ -43,12 +15,10 @@ sys1 = km1/(s*(tau_m1*s +1));
 sys2 = km2/(s*(tau_m2*s +1));
 
 %% Caracterización por velocidad
-car1=sim('PlantaAmpliada1.slx',0.2)
-car2=sim('PlantaAmpliada2.slx',0.2)
 
 s = tf('s');
 [tau_m1, km1] = identificarPlantaVelocidad(car1.tout, car1.simwm1.data, 20);
-[tau_m2, km2] = identificarPlantaVelocidad(car2.tout, car2.simwm1.data, 20);
+[tau_m2, km2] = identificarPlantaVelocidad(car2.tout, car2.simwm2.data, 20);
 
 tf_sys1 = km1/(tau_m1*s +1);
 tf_sys2 = km2/(tau_m2*s +1);

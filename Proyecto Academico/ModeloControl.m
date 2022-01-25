@@ -1,14 +1,18 @@
 ent_car=20;
-car1=sim('PlantaAmpliada1.slx',0.2);
-car2=sim('PlantaAmpliada2.slx',0.2);
+
+%Caracterizacion en tiempo real
+%car1=sim('PlantaAmpliada1.slx',0.2);
+%car2=sim('PlantaAmpliada2.slx',0.2);
+
+%Caracterizacion del informe
 planta1 = extractTimetable(load('CaracterizacionPlanta1.mat').data );
 planta2 = extractTimetable(load('CaracterizacionPlanta2.mat').data );
 
 %% Caracterización por posición
 
 %Caracterizacion del informe
-[p1, tau_m1, km1] = identificarPlantaPosicion(seconds(planta1.Time), planta1.theta1, 20);
-[p2, tau_m2, km2] = identificarPlantaPosicion(seconds(planta2.Time), planta2.theta2, 20);
+[p1, tau_m1, km1] = identificarPlantaPosicion(seconds(planta1.Time), planta1.theta1, ent_car);
+[p2, tau_m2, km2] = identificarPlantaPosicion(seconds(planta2.Time), planta2.theta2, ent_car);
 
 %Caracterizacion en tiempo real
 %[p1, tau_m1, km1] = identificarPlantaPosicion(car1.tout, car1.simth1.data, ent_car);
@@ -24,8 +28,8 @@ sys2 = km2/(s*(tau_m2*s +1));
 s = tf('s');
 
 %Caracterizacion del informe
-[tau_m1, km1] = identificarPlantaVelocidad(seconds(planta1.Time), planta1.Wm1, 20);
-[tau_m2, km2] = identificarPlantaVelocidad(seconds(planta2.Time), planta2.Wm2, 20);
+[tau_m1, km1] = identificarPlantaVelocidad(seconds(planta1.Time), planta1.Wm1, ent_car);
+[tau_m2, km2] = identificarPlantaVelocidad(seconds(planta2.Time), planta2.Wm2, ent_car);
 
 %Caracterizacion en tiempo real
 %[tau_m1, km1] = identificarPlantaVelocidad(car1.tout, car1.simwm1.data, ent_car);

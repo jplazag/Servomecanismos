@@ -10,9 +10,9 @@ FILE_DESCRIPTION(
 
 FILE_NAME(
 /* name */ 
-'C:\\Users\\Yeison\\Documents\\GitHub\\Servomecanismos\\Modelo Simscap
-e completo\\\\pin2_ipt_3660e19a.STEP',
-/* time_stamp */ '2022-01-15T22:06:57-05:00',
+'C:\\Users\\Yeison\\Documents\\GitHub\\Servomecanismos\\Modelo Actuali
+zado bonito\\\\pin2_ipt_3660e19a.STEP',
+/* time_stamp */ '2022-01-24T18:51:10-05:00',
 /* author */ ('Yeison'),
 /* organization */ (''),
 /* preprocessor_version */ 'ST-DEVELOPER v18.1',
@@ -37,11 +37,11 @@ DATA;
 #21=EDGE_LOOP('',(#44,#45));
 #22=EDGE_LOOP('',(#46,#47));
 #23=LINE('',#103,#24);
-#24=VECTOR('',#87,5.5);
-#25=CIRCLE('',#73,5.5);
-#26=CIRCLE('',#74,5.5);
-#27=CIRCLE('',#75,5.5);
-#28=CIRCLE('',#76,5.5);
+#24=VECTOR('',#87,3.5);
+#25=CIRCLE('',#73,3.5);
+#26=CIRCLE('',#74,3.5);
+#27=CIRCLE('',#75,3.5);
+#28=CIRCLE('',#76,3.5);
 #29=VERTEX_POINT('',#98);
 #30=VERTEX_POINT('',#99);
 #31=VERTEX_POINT('',#102);
@@ -61,7 +61,7 @@ DATA;
 #45=ORIENTED_EDGE('',*,*,#34,.T.);
 #46=ORIENTED_EDGE('',*,*,#37,.F.);
 #47=ORIENTED_EDGE('',*,*,#36,.F.);
-#48=CYLINDRICAL_SURFACE('',#72,5.5);
+#48=CYLINDRICAL_SURFACE('',#72,3.5);
 #49=ADVANCED_FACE('',(#17),#48,.T.);
 #50=ADVANCED_FACE('',(#18),#15,.T.);
 #51=ADVANCED_FACE('',(#19),#16,.F.);
@@ -116,13 +116,13 @@ POSITIVE_RATIO_MEASURE(1.),#56);
 #95=DIRECTION('ref_axis',(1.,0.,0.));
 #96=CARTESIAN_POINT('',(0.,0.,0.));
 #97=CARTESIAN_POINT('Origin',(0.,0.,0.));
-#98=CARTESIAN_POINT('',(5.5,0.,20.));
-#99=CARTESIAN_POINT('',(-5.5,-6.73555739531044E-16,20.));
+#98=CARTESIAN_POINT('',(3.5,0.,20.));
+#99=CARTESIAN_POINT('',(-3.5,-4.28626379701574E-16,20.));
 #100=CARTESIAN_POINT('Origin',(0.,0.,20.));
 #101=CARTESIAN_POINT('Origin',(0.,0.,20.));
-#102=CARTESIAN_POINT('',(-5.5,-6.73555739531044E-16,0.));
-#103=CARTESIAN_POINT('',(-5.5,-6.73555739531044E-16,0.));
-#104=CARTESIAN_POINT('',(5.5,0.,0.));
+#102=CARTESIAN_POINT('',(-3.5,-4.28626379701574E-16,0.));
+#103=CARTESIAN_POINT('',(-3.5,-4.28626379701574E-16,0.));
+#104=CARTESIAN_POINT('',(3.5,0.,0.));
 #105=CARTESIAN_POINT('Origin',(0.,0.,0.));
 #106=CARTESIAN_POINT('Origin',(0.,0.,0.));
 #107=CARTESIAN_POINT('Origin',(0.,0.,20.));

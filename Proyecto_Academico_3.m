@@ -66,7 +66,7 @@ y_r = pendiente_r * (x_r - x_inicio);
 
 
 % Trayectoria de interés --------------------------------------------------
-vueltas = 4;
+vueltas = 1;
 theta_f = (2*vueltas*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
 
 x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;

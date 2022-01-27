@@ -9,7 +9,7 @@ v_max = 10
 
 dt = 0.05;
 
-scale_limit = 0.8
+scale_limit = 0.8;
 r0 = 10;
 ra = r0*3/10;
 n = 3;

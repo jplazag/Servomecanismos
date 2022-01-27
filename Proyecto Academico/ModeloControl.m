@@ -1,55 +1,9 @@
+run('Robot_eslabones_DataFile.m');
+
 ent_car=20;
-
-%Caracterizacion en tiempo real
-%car1=sim('PlantaAmpliada1.slx',0.2);
-%car2=sim('PlantaAmpliada2.slx',0.2);
-
-%Caracterizacion del informe
-planta1 = extractTimetable(load('CaracterizacionPlanta1.mat').data );
-planta2 = extractTimetable(load('CaracterizacionPlanta2.mat').data );
-
-%% Caracterización por posición
-
-%Caracterizacion del informe
-[p1, tau_m1, km1] = identificarPlantaPosicion(seconds(planta1.Time), planta1.theta1, ent_car);
-[p2, tau_m2, km2] = identificarPlantaPosicion(seconds(planta2.Time), planta2.theta2, ent_car);
-
-%Caracterizacion en tiempo real
-%[p1, tau_m1, km1] = identificarPlantaPosicion(car1.tout, car1.simth1.data, ent_car);
-%[p2, tau_m2, km2] = identificarPlantaPosicion(car2.tout, car2.simth2.data, ent_car);
-
-s = tf('s');
-
-sys1 = km1/(s*(tau_m1*s +1));
-sys2 = km2/(s*(tau_m2*s +1));
-
-%% Caracterización por velocidad
-
-s = tf('s');
-
-%Caracterizacion del informe
-[tau_m1, km1] = identificarPlantaVelocidad(seconds(planta1.Time), planta1.Wm1, ent_car);
-[tau_m2, km2] = identificarPlantaVelocidad(seconds(planta2.Time), planta2.Wm2, ent_car);
-
-%Caracterizacion en tiempo real
-%[tau_m1, km1] = identificarPlantaVelocidad(car1.tout, car1.simwm1.data, ent_car);
-%[tau_m2, km2] = identificarPlantaVelocidad(car2.tout, car2.simwm2.data, ent_car);
-
-tf_sys1 = km1/(tau_m1*s +1);
-tf_sys2 = km2/(tau_m2*s +1);
-
-tf_pos1 = tf_sys1 * (1/s);
-tf_pos2 = tf_sys2 * (1/s);
-zeta = 1; % Criticamente amortiguado
-% Constante proporcional motor1
-P1 = 1 / (4*km1*tau_m1*zeta^2);
-% Constante proporcional motor2
-P2 = 1 / (4*km2*tau_m2*zeta^2);
 
 %% Variables de Simulacion
 Den_Acrilico = 1.18 / 1000; % kg/cm^3
-
-run('Robot_eslabones_DataFile.m');
 
 %% MODELO MOTORES PARA LA MODELACION
 
@@ -79,6 +33,53 @@ N_catalogo_2 =  16;
 
 input_a1 = timeseries(angulo_e1+pi/2,tiempo);
 input_a2 = timeseries(angulo_e2-pi,tiempo);
+
+
+%Caracterizacion en tiempo real
+car1=sim('PlantaAmpliada1.slx',0.2);
+car2=sim('PlantaAmpliada2.slx',0.2);
+
+%Caracterizacion del informe
+%planta1 = extractTimetable(load('CaracterizacionPlanta1.mat').data );
+%planta2 = extractTimetable(load('CaracterizacionPlanta2.mat').data );
+
+%% Caracterización por posición
+
+%Caracterizacion del informe
+%[p1, tau_m1, km1] = identificarPlantaPosicion(seconds(planta1.Time), planta1.theta1, ent_car);
+%[p2, tau_m2, km2] = identificarPlantaPosicion(seconds(planta2.Time), planta2.theta2, ent_car);
+
+%Caracterizacion en tiempo real
+[p1, tau_m1, km1] = identificarPlantaPosicion(car1.tout, car1.simth1.data, ent_car);
+[p2, tau_m2, km2] = identificarPlantaPosicion(car2.tout, car2.simth2.data, ent_car);
+
+s = tf('s');
+
+sys1 = km1/(s*(tau_m1*s +1));
+sys2 = km2/(s*(tau_m2*s +1));
+
+%% Caracterización por velocidad
+
+s = tf('s');
+
+%Caracterizacion del informe
+%[tau_m1, km1] = identificarPlantaVelocidad(seconds(planta1.Time), planta1.Wm1, ent_car);
+%[tau_m2, km2] = identificarPlantaVelocidad(seconds(planta2.Time), planta2.Wm2, ent_car);
+
+%Caracterizacion en tiempo real
+[tau_m1, km1] = identificarPlantaVelocidad(car1.tout, car1.simwm1.data, ent_car);
+[tau_m2, km2] = identificarPlantaVelocidad(car2.tout, car2.simwm2.data, ent_car);
+
+tf_sys1 = km1/(tau_m1*s +1);
+tf_sys2 = km2/(tau_m2*s +1);
+
+tf_pos1 = tf_sys1 * (1/s);
+tf_pos2 = tf_sys2 * (1/s);
+zeta = 1; % Criticamente amortiguado
+% Constante proporcional motor1
+P1 = 1 / (4*km1*tau_m1*zeta^2);
+% Constante proporcional motor2
+P2 = 1 / (4*km2*tau_m2*zeta^2);
 
 %% Functions
 function [tau, Km] =  identificarPlantaVelocidad(x,y, Vin)

@@ -234,19 +234,19 @@ smiData.Solid(6).ID = 'Correa.ipt_{D6036E33-45E7-9EA4-83B1-EAA46AF1B844}';
 smiData.RevoluteJoint(5).Rz.Pos = 0.0;
 smiData.RevoluteJoint(5).ID = '';
 
-smiData.RevoluteJoint(1).Rz.Pos = 41.484695995388741;  % deg
+smiData.RevoluteJoint(1).Rz.Pos = 0;  % deg
 smiData.RevoluteJoint(1).ID = '[Polea:1:-:Correa:1]';
 
-smiData.RevoluteJoint(2).Rz.Pos = -137.51719812094561;  % deg
+smiData.RevoluteJoint(2).Rz.Pos = 0;  % deg
 smiData.RevoluteJoint(2).ID = '[Polea:2:-:Correa:1]';
 
-smiData.RevoluteJoint(3).Rz.Pos = 152.68189144719778;  % deg
+smiData.RevoluteJoint(3).Rz.Pos = 10.2559;  % deg
 smiData.RevoluteJoint(3).ID = '[pin2:1:-:Eslabon:1]';
 
-smiData.RevoluteJoint(4).Rz.Pos = -48.71328267892477;  % deg
+smiData.RevoluteJoint(4).Rz.Pos = -20.6093;  % deg
 smiData.RevoluteJoint(4).ID = '[pin2:2:-:Eslabon:2]';
 
 %This joint has been chosen as a cut joint. Simscape Multibody treats cut joints as algebraic constraints to solve closed kinematic loops. The imported model does not use the state target data for this joint.
-smiData.RevoluteJoint(5).Rz.Pos = 14.316214436472135;  % deg
+smiData.RevoluteJoint(5).Rz.Pos = 0;  % deg
 smiData.RevoluteJoint(5).ID = '[pin2:2:-:Polea:2]';
 

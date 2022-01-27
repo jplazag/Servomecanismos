@@ -2,9 +2,9 @@ close all
 clear
 
 %Variables para modelado del trebol
-scale = 1.3;
+scale = 1;
 rota=90; 
-vueltas = 2;
+vueltas = 1;
 
 
 

@@ -1,4 +1,7 @@
-run ("Proyecto_Academico.m");
+close all
+clear
+
+run ("referencia.m");
 
 run("ModeloControl.m");
 

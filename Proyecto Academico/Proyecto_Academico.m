@@ -4,12 +4,13 @@ clear
 %Variables para modelado del trebol
 scale = 1;
 rota=90; 
-vueltas = 1;
+vueltas = 4;
 
 
 
 dt = 0.05;
 
+scale_limit = 0.8
 r0 = 10;
 ra = r0*3/10;
 n = 3;
@@ -30,12 +31,12 @@ L2 =21.5; %1.0*ceil(max(R))/2;    cm
 
 % Selección de la pendiente de la trayectoria recta de aproximación -------
 
-x_inicio = min(1.3*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0) - 5;
+x_inicio = min(1.3*scale_limit*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0) - 5;
 
 theta_pre_dev = (2*pi:-dt:0) - theta0_f;
 
-x_pre_dev = scale*0.8*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* sin(theta_pre_dev)+ x0 ;
-y_pre_dev = scale*0.8*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* cos(theta_pre_dev)+ y0 ;
+x_pre_dev = scale*scale_limit*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* sin(theta_pre_dev)+ x0 ;
+y_pre_dev = scale*scale_limit*(r0-ra*sin(n*(theta_pre_dev + theta0_f))) .* cos(theta_pre_dev)+ y0 ;
 
 derivadas_trebol = diff( [y_pre_dev y_pre_dev(1)] )./diff([x_pre_dev x_pre_dev(1)]);
 
@@ -76,8 +77,8 @@ y_r = pendiente_r * (x_r - x_inicio);
 
 theta_f = (2*vueltas*pi:-dt:0) + theta_pre_dev(indice_r) - dt ;
 
-x = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
-y = scale*0.8*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
+x = scale*scale_limit*(r0-ra*sin(n*(theta_f + theta0_f))) .* sin(theta_f)+ x0;
+y = scale*scale_limit*(r0-ra*sin(n*(theta_f + theta0_f))) .* cos(theta_f)+ y0;
 
 % figure
 % plot([x_inicio x_final_r],[0 y_final_r], 'r'); hold on;
@@ -92,7 +93,6 @@ tiempo = [t_r t_r(end)+dt:dt: t_r(end) + (size(theta_f,2))*dt];
 rutas_x = [x_r x];
 rutas_y = [y_r y]; 
 
-limit = 0.8;
 s = 0;
 
 while true
@@ -225,7 +225,7 @@ vyB = vyA + vyBA;
 
 
 alpha_1 = gradient(omega_1)./gradient(tiempo(1:end));
-alpha_2 = gradient(omega_2)./gradient(tiempo(1:end)) + alpha_1;
+alpha_2 = gradient(omega_2)./gradient(tiempo(1:end)) + alpha_1; %+ 2*omega_1.*(vxB.^2 + vyB.^2).^(1/2)
 
 
 
@@ -351,7 +351,7 @@ for iii = 1:size(angulo_e1,2)
         -R01y   R01x    1       -R21y   R21x    0;
         0       0       0       -1      0       0;
         0       0       0       0       -1      0;
-        0       0       0       R12y    R12x    1];
+        0       0       0       R12y    -R12x    1];
 
 
     B = [m1*axG1(iii);
